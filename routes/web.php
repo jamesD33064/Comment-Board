@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\CommentTableController;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +20,8 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Route::get('/users', [UserController::class, 'index']);
+Route::get('/auth', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('/auth', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::get('/{Comment_table}', [CommentTableController::class, 'index']);
+Route::get('/comment/{Comment_table}', [CommentTableController::class, 'index']);

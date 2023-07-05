@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class UserController extends Controller
 {
@@ -25,7 +26,13 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $document = [
+            'UserName' => $request->username,
+            'Password' => $request->password
+        ];
+        echo $request->username.' - '.$request->password;
+        User::createUser($document);
+        return redirect(route('home'));
     }
 
     /**

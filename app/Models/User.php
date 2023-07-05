@@ -2,43 +2,70 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+// use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+// use Jenssegers\Mongodb\Eloquent\Model;
+use MongoDB\Client;
 
-class User extends Authenticatable
+class User extends Model
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    protected $connection = 'mongodb';
+    protected $collection = 'comment1data';
+    protected $fillable = ['UserName', 'CommentContent', 'TimeStamp'];
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    // 建立資料
+    public static function createUser($data)
+    {
+        // return self::create($data);
+        $client = new Client("mongodb://database:27017");
+        $database = $client->laravel;
+        $collection = $database->user;
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+        $result = $collection->insertOne($data);
+        return $result;
+    }
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    // 讀取資料
+    public static function getUserBy_username_pw($username, $password)
+    {
+        // return self::find($id);
+        $client = new Client("mongodb://database:27017");
+        $database = $client->laravel;
+        $collection = $database->user;
+
+        $document = $collection->find(['UserName' => $username, 'Password'=>$password]);
+        return $document;
+    }
+    public static function getAllUser()
+    {
+        $client = new Client("mongodb://database:27017");
+        $database = $client->laravel;
+        $collection = $database->user;
+
+        $document = $collection->find();
+        return $document;
+    }
+
+    // 更新資料
+    public static function updateUser($id, $data)
+    {
+        // $comment = self::find($id);
+        // if ($comment) {
+        //     $comment->fill($data);
+        //     $comment->save();
+        //     return $comment;
+        // }
+        // return null;
+    }
+
+    // 刪除資料
+    public static function deleteUser($id)
+    {
+        // $comment = self::find($id);
+        // if ($comment) {
+        //     $comment->delete();
+        //     return true;
+        // }
+        // return false;
+    }
 }
