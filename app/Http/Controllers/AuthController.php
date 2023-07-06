@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
 use Illuminate\Support\Facades\Session;
+use App\Models\User;
 
 
 class AuthController extends Controller
@@ -21,7 +21,6 @@ class AuthController extends Controller
         if ($this->customAuthenticate($request)) {
             // 確認登入
             Session::put('username', $request->username);
-            // Session::put('email', $request->password);
             return redirect(route('home'));
         } else {
             return redirect()->back()->withErrors(['error' => '登入失敗']);

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\CommentTableController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ManagerAuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,8 +25,15 @@ Route::get('/profile', function () {
     return view('profile');
 });
 
+Route::get('/manage', function () {
+    return view('manage');
+})->name('manage');
+
 Route::get('/auth', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/auth', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+Route::post('/manage', [ManagerAuthController::class, 'login'])->name('manage_login');
+Route::post('/manage_logout', [ManagerAuthController::class, 'logout'])->name('manage_logout');
 
 Route::get('/comment/{Comment_table}', [CommentTableController::class, 'index']);

@@ -24,10 +24,5 @@ class CommentTableController extends Controller
 
         $AllComment = Comment::getAllComment();
         return view('comment',['commentdata' => $AllComment]);
-        // foreach ($AllComment as $SingalComment) {
-        //     echo $SingalComment['CommentContent'] . ' - ' . $SingalComment['UserName'] . ' - ' . $SingalComment['TimeStamp'] . '<br>';
-        // }
-        
-
     }
 }
