@@ -27,6 +27,7 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
+        // if($request->UserName != null && $request->ComentContent != null)
         $document = [
             'UserName' => $request->UserName,
             'CommentContent' => $request->CommentContent,
@@ -34,7 +35,7 @@ class CommentController extends Controller
         ];
 
         Comment::createComment($document);
-        return redirect(route('home'));
+        return redirect('/comment/1');
     }
 
     /**

@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Laravel</title>
+    <title>留言板一</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -17,7 +17,6 @@
 </head>
 
 <body>
-
     <div class="container py-5">
         <div class="row">
             <div class="col">
@@ -27,7 +26,9 @@
                             <h5 class="card-title">
                                 Messenger
                                 @if (Session::has('username'))
-                                {{Session::get('username');}}<!-- 使用者名稱 -->
+                                " {{Session::get('username');}} "<!-- 使用者名稱 -->
+                                @else
+                                " unknow "
                                 @endif
                             </h5>
                         </div>
@@ -35,8 +36,8 @@
                             <!-- 聊天訊息會顯示在這裡 -->
                             @foreach ($commentdata as $CD)
                             <div class="message">
-                                <div class="message-sender">{{ $CD['UserName'] }}</div>
-                                <div class="message-content">{{ $CD['CommentContent'] }}</div>
+                                <div class="message-sender"><strong>{{ $CD['UserName'] }}</strong></div>
+                                <div class="message-content">&nbsp;{{ $CD['CommentContent'] }}</div>
                             </div>
                             @endforeach
                         </div>
@@ -55,6 +56,30 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">身份確認</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    是否使用匿名身份留言？
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary">前往註冊</button>
+                    <button id="btn_unknow_modal_confirm" type="button" class="btn btn-primary" data-bs-dismiss="modal">確認</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.21.1/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="{{ asset('js/page_comment.js') }}"></script>
+
 
 </body>
 
