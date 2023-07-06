@@ -36,6 +36,22 @@ class User extends Model
         $document = $collection->find(['UserName' => $username, 'Password'=>$password]);
         return $document;
     }
+
+    public static function getUserPWBy_username($username)
+    {
+        $client = new Client("mongodb://database:27017");
+        $database = $client->laravel;
+        $collection = $database->user;
+        
+        $document = $collection->findOne(['UserName' => $username]);
+        if ($document) {
+            $PW = $document->Password;
+            return $PW;
+        } else {
+            return '找不到該使用者';
+        }
+    }
+
     public static function getAllUser()
     {
         $client = new Client("mongodb://database:27017");
@@ -43,19 +59,23 @@ class User extends Model
         $collection = $database->user;
 
         $document = $collection->find();
-        return $document;
+        $PW = $document->Password;
+        return $PW;
     }
 
     // 更新資料
-    public static function updateUser($id, $data)
+    public static function updateUserNewPW($id, $newPW)
     {
-        // $comment = self::find($id);
-        // if ($comment) {
-        //     $comment->fill($data);
-        //     $comment->save();
-        //     return $comment;
-        // }
-        // return null;
+        $client = new Client("mongodb://database:27017");
+        $database = $client->laravel;
+        $collection = $database->user;
+    
+        $result = $collection->updateOne(
+            ['UserName' => $id],
+            ['$set' => ['Password' => $newPW]]
+        );
+    
+        return $result;
     }
 
     // 刪除資料

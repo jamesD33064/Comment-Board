@@ -44,6 +44,7 @@ class UserController extends Controller
     public function show($id)
     {
         //
+        return 'test';
     }
 
     /**
@@ -55,7 +56,15 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $oldPW = $request->input('oldPW');
+        $newPW = $request->input('newPW');
+
+        if(User::getUserPWBy_username($id) == $oldPW){
+            User::updateUserNewPW($id, $newPW);
+            return redirect(route('home'));
+        }
+        return 'false';
+
     }
 
     /**

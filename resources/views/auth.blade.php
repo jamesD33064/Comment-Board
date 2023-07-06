@@ -33,7 +33,7 @@
                                 <label for="password" class="form-label">Password</label>
                                 <input type="password" class="form-control" id="password" name="password" required>
                             </div>
-                            <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
+                            @csrf
                             <button type="submit" class="btn btn-primary">Login</button>
                         </form>
                     </div>
