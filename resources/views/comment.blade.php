@@ -24,7 +24,12 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="mb-4">
-                            <h5 class="card-title">Messenger</h5>
+                            <h5 class="card-title">
+                                Messenger
+                                @if (Session::has('username'))
+                                {{Session::get('username');}}<!-- 使用者名稱 -->
+                                @endif
+                            </h5>
                         </div>
                         <div id="chatMessages" class="overflow-auto" style="max-height: 400px;">
                             <!-- 聊天訊息會顯示在這裡 -->
@@ -39,7 +44,8 @@
                             <!-- 傳送訊息 -->
                             <form action="/api/comment" method="post" id="messageForm">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" id="content" name="content" placeholder="Type a message..." required>
+                                    <input type="hidden" name="UserName" id="UserName" value="{{ Session::has('username') ? Session::get('username') : '' }}" required><!-- 使用者名稱 -->
+                                    <input type="text" class="form-control" id="CommentContent" name="CommentContent" placeholder="Type a message..." required><!-- 訊息內容 -->
                                     <button type="submit" class="btn btn-primary">Send</button>
                                 </div>
                             </form>

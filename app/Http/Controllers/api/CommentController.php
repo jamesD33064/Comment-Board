@@ -28,8 +28,8 @@ class CommentController extends Controller
     public function store(Request $request)
     {
         $document = [
-            'UserName' => 'unknow',
-            'CommentContent' => $request->content,
+            'UserName' => $request->UserName,
+            'CommentContent' => $request->CommentContent,
             'TimeStamp'=>'test'
         ];
 
