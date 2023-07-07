@@ -10,5 +10,5 @@ class Comment extends Model
 {
     protected $connection = 'mongodb';
     protected $collection = 'comment1data';
-    protected $fillable = ['UserName', 'CommentContent', 'TimeStamp'];
+    protected $fillable = ['UserName', 'CommentContent', 'visible', 'created_at'];
 }

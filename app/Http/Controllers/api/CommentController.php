@@ -29,7 +29,7 @@ class CommentController extends Controller
         $comment = new Comment;
         $comment->UserName = $request->UserName;
         $comment->CommentContent = $request->CommentContent;
-        $comment->TimeStamp = 'today';
+        $comment->visible = 'block';
         $comment->save();
 
         return redirect('/comment/1');
@@ -55,7 +55,18 @@ class CommentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        echo 'update';
+        switch($request->oper){
+            case 'unvisible':
+                $comment = Comment::find($id);
+                $comment->visible = 'none';
+                $comment->save();
+                break;
+            case 'visible':
+                $comment = Comment::find($id);
+                $comment->visible = 'block';
+                $comment->save();
+                break;
+        }
     }
 
     /**

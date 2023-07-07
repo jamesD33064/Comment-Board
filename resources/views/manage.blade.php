@@ -144,8 +144,8 @@
                                             <i class="header-icon lnr-apartment icon-gradient bg-love-kiss"> </i>
                                             Comment List
                                         </div>
-                                        <div class="card-header-title text-danger" id="btn_del_comment" style="display: none;">
-                                            Delete
+                                        <div class="card-header-title text-danger " id="btn_del_comment" style="display: none;">
+                                            <span class="pe-auto">Delete</span>
                                             <i class="header-icon lnr-apartment icon-gradient bg-love-kiss"> </i>
                                         </div>
                                     </div>
@@ -163,12 +163,13 @@
                                                                 <div class="widget-content p-0">
                                                                     <div class="widget-content-wrapper">
                                                                         <div class="widget-content-left">
-                                                                            <div class="widget-heading">{{ $CD['UserName'] }}</div>
+                                                                            <div class="widget-heading">{{ $CD['UserName'] }}
+                                                                            <small class="widget-subheading">{{ $CD['visible'] }}</small></div>
                                                                             <div class="widget-subheading">&nbsp;{{ $CD['CommentContent'] }}</div>
                                                                         </div>
                                                                         <div class="widget-content-right">
                                                                             <div class="font-size-xlg text-muted">
-                                                                                <small class="widget-subheading">{{ $CD['TimeStamp'] }}</small>
+                                                                                <small class="widget-subheading">{{ $CD['created_at'] }}</small>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -228,6 +229,8 @@
             <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.21.1/dist/axios.min.js"></script>
     <script type="text/javascript" src="https://demo.dashboardpack.com/architectui-html-free/assets/scripts/main.js"></script>
     <script type="module" src="{{ asset('js/page_manage.js') }}"></script>
     @endif

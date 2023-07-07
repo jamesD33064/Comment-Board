@@ -10,7 +10,8 @@ class CommentTableController extends Controller
 {
     public function index()
     {
-        $AllComment = Comment::all();
+        $AllComment = Comment::where('visible', 'block')
+                    ->get();
         return view('comment',['commentdata' => $AllComment]);
     }
 }
