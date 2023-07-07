@@ -37,10 +37,10 @@ class AuthController extends Controller
     // 驗證帳號
     private function customAuthenticate($request)
     {
-        $count = 0;
-        foreach(User::getUserBy_username_pw($request->username, $request->password) as $b){$count+=1;}
-
-        if ($count == 1) {
+        $user = User::where('UserName', $request->username)
+                    ->where('Password', $request->password)
+                    ->get();
+        if (count($user) == 1) {
             return true;
         }
         return false;
@@ -49,6 +49,7 @@ class AuthController extends Controller
     // 清除登入狀態
     private function clearUserSession()
     {
+        Session::forget('manager_username');
         Session::forget('username');
         Session::forget('email');
     }

@@ -15,7 +15,6 @@ class CommentController extends Controller
      */
     public function index()
     {
-        //
         echo 'index';
     }
 
@@ -27,14 +26,12 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-        // if($request->UserName != null && $request->ComentContent != null)
-        $document = [
-            'UserName' => $request->UserName,
-            'CommentContent' => $request->CommentContent,
-            'TimeStamp'=>'test'
-        ];
+        $comment = new Comment;
+        $comment->UserName = $request->UserName;
+        $comment->CommentContent = $request->CommentContent;
+        $comment->TimeStamp = 'today';
+        $comment->save();
 
-        Comment::createComment($document);
         return redirect('/comment/1');
     }
 
@@ -46,7 +43,6 @@ class CommentController extends Controller
      */
     public function show($id)
     {
-        //
         echo 'show';
     }
 
@@ -59,7 +55,6 @@ class CommentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
         echo 'update';
     }
 
@@ -71,11 +66,6 @@ class CommentController extends Controller
      */
     public function destroy($id)
     {
-        //
         echo 'destroy';
     }
 }
-
-
-
-// db.comment1data.insertOne({"UserName": "TestUser", "CommentContent": "Hello world", "TimeStamp":"today"})

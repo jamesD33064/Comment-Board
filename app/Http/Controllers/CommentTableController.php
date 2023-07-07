@@ -8,21 +8,9 @@ use App\Models\Comment;
 
 class CommentTableController extends Controller
 {
-    // public function index(){
-    //     // return view('comment',['commentdata' => $collection->find()]);
-    // }
-
     public function index()
     {
-        // $documents = Comment::all();
-        
-        // $collection = DB::connection('mongodb')->collection('comment1data');
-        // $documents = $collection->find(['UserName' => 'TestUser']);
-        // foreach ($documents as $user) {
-        //     echo $user['CommentContent'] . ' - ' . $user['UserName'] . ' - ' . $user['TimeStamp'] . '<br>';
-        // }
-
-        $AllComment = Comment::getAllComment();
+        $AllComment = Comment::all();
         return view('comment',['commentdata' => $AllComment]);
     }
 }

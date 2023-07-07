@@ -26,12 +26,11 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $document = [
-            'UserName' => $request->username,
-            'Password' => $request->password
-        ];
-        echo $request->username.' - '.$request->password;
-        User::createUser($document);
+        $user = new User;
+        $user->UserName = $request->username;
+        $user->Password = $request->password;
+        $user->save();
+
         return redirect(route('home'));
     }
 
@@ -58,23 +57,14 @@ class UserController extends Controller
     {
         $oldPW = $request->input('oldPW');
         $newPW = $request->input('newPW');
-
-        if(User::getUserPWBy_username($id) == $oldPW){
-            User::updateUserNewPW($id, $newPW);
+        
+        $user = User::where('UserName', $id)->get();
+        if($user[0]['Password'] == $oldPW){
+            $user[0]->Password = $newPW;
+            $user[0]->save();
             return redirect(route('home'));
         }
-        return 'false';
+        return '原密碼錯誤';
 
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }
