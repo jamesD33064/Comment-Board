@@ -42,8 +42,10 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
-        return 'test';
+    //     $posts =
+    // Post::where('author.name', 'John')
+    //     ->take(10)
+    //     ->get();
     }
 
     /**

@@ -55,18 +55,9 @@ class CommentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        switch($request->oper){
-            case 'unvisible':
-                $comment = Comment::find($id);
-                $comment->visible = 'none';
-                $comment->save();
-                break;
-            case 'visible':
-                $comment = Comment::find($id);
-                $comment->visible = 'block';
-                $comment->save();
-                break;
-        }
+        $comment = Comment::find($id);
+        $comment->visible = $request->visible;
+        $comment->save();
     }
 
     /**

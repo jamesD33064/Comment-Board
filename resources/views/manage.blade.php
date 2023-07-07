@@ -144,9 +144,15 @@
                                             <i class="header-icon lnr-apartment icon-gradient bg-love-kiss"> </i>
                                             Comment List
                                         </div>
-                                        <div class="card-header-title text-danger " id="btn_del_comment" style="display: none;">
-                                            <span class="pe-auto">Delete</span>
-                                            <i class="header-icon lnr-apartment icon-gradient bg-love-kiss"> </i>
+                                        <div class="row">
+                                            <div class="col text-success" id="btn_block_comment" style="display: none;">
+                                                <span class="pe-auto">Show</span>
+                                                <i class="header-icon lnr-apartment icon-gradient bg-love-kiss"> </i>
+                                            </div>
+                                            <div class="col text-danger" id="btn_none_comment" style="display: none;">
+                                                <span class="pe-auto">Delete</span>
+                                                <i class="header-icon lnr-apartment icon-gradient bg-love-kiss"> </i>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="card-body">
