@@ -17,13 +17,12 @@ use App\Http\Controllers\ManagerAuthController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+
+Route::get('/', [CommentTableController::class, 'index'])->name('home');
 
 Route::get('/profile', function () {
     return view('profile');
-});
+})->name('profile');
 
 Route::get('/manage', function () {
     return view('manage');
@@ -35,5 +34,3 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::post('/manage', [ManagerAuthController::class, 'login'])->name('manage_login');
 Route::post('/manage_logout', [ManagerAuthController::class, 'logout'])->name('manage_logout');
-
-Route::get('/comment/{Comment_table}', [CommentTableController::class, 'index']);

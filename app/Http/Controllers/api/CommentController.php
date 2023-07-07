@@ -32,7 +32,7 @@ class CommentController extends Controller
         $comment->visible = 'block';
         $comment->save();
 
-        return redirect('/comment/1');
+        return redirect(route('home'));
     }
 
     /**

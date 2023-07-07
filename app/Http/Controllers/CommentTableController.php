@@ -12,6 +12,6 @@ class CommentTableController extends Controller
     {
         $AllComment = Comment::where('visible', 'block')
                     ->get();
-        return view('comment',['commentdata' => $AllComment]);
+        return view('welcome',['commentdata' => $AllComment]);
     }
 }

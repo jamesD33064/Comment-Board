@@ -1,14 +1,13 @@
 // import axios from 'axios';
 
-var myModal = new bootstrap.Modal(document.getElementById('exampleModal'), {
+var myModal = new bootstrap.Modal(document.getElementById('modal_user_confirm'), {
     keyboard: false
 })
 
-function send_comment(username, content, timestamp){
+function send_comment(username, content){
     axios.post('/api/comment', {
         UserName: username,
-        CommentContent: content,
-        TimeStamp: timestamp
+        CommentContent: content
       })
       .then(response => {
         location.reload();
