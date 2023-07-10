@@ -50,6 +50,30 @@ class CommentController extends Controller
         echo 'show';
     }
 
+    public static function Top10_ActiviteUser(){
+        $users = Comment::raw(function ($collection) {
+            return $collection->aggregate([
+                [
+                    '$group' => [
+                        '_id' => '$UserName',
+                        'count' => ['$sum' => 1]
+                    ]
+                ],
+                [
+                    '$sort' => ['count' => -1]
+                ]
+            ]);
+        });
+        
+        $userRecords = [];
+        foreach ($users as $user) {
+            $userRecords[$user['_id']] = $user['count'];
+        }
+        
+        arsort($userRecords);
+        return $userRecords;
+    }
+
     /**
      * Update the specified resource in storage.
      *

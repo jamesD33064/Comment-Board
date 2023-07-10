@@ -4,7 +4,6 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
 
 use App\Models\User;
 use App\Models\Log;
@@ -85,7 +84,7 @@ class UserController extends Controller
         if (count($user) == 1) {
             User::destroy($user[0]['_id']);
             // 刪除帳號成功
-            
+
             Log::createLog($user[0]['UserName'], 'Delete Account', 'Success');
             return response()->json(['message' => 'Resource deleted successfully']);
         }

@@ -55,7 +55,6 @@ class AuthController extends Controller
     // 清除登入狀態
     private function clearUserSession()
     {
-        Session::forget('manager_username');
         Session::forget('username');
     }
 }

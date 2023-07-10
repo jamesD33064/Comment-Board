@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CommentTableController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ManagerAuthController;
+use App\Http\Controllers\api\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,3 +35,5 @@ Route::get('/manage', function () {
 
 Route::post('/manage', [ManagerAuthController::class, 'login'])->name('manage_login');
 Route::post('/manage_logout', [ManagerAuthController::class, 'logout'])->name('manage_logout');
+
+Route::get('/manage/Top10_ActiviteUser', [CommentController::class, 'Top10_ActiviteUser'])->name('Top10_ActiviteUser');
