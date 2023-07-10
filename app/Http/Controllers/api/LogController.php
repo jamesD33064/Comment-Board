@@ -29,11 +29,11 @@ class LogController extends Controller
             $file = fopen('php://output', 'w');
 
             // 寫入標題
-            fputcsv($file, ['user_id', 'action', 'details']);
+            fputcsv($file, ['Log_id','create_at','update_at','user_id', 'action', 'details']);
 
             // 寫入內容
             foreach ($data as $row) {
-                fputcsv($file, [$row->user_id, $row->action, $row->details]);
+                fputcsv($file, [$row->_id,$row->created_at,$row->updated_at,$row->user_id, $row->action, $row->details]);
             }
 
             fclose($file);

@@ -24,13 +24,13 @@ Route::get('/profile', function () {
     return view('profile');
 })->name('profile');
 
-Route::get('/manage', function () {
-    return view('manage');
-})->name('manage');
-
 Route::get('/auth', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/auth', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+Route::get('/manage', function () {
+    return view('manage');
+})->name('manage');
 
 Route::post('/manage', [ManagerAuthController::class, 'login'])->name('manage_login');
 Route::post('/manage_logout', [ManagerAuthController::class, 'logout'])->name('manage_logout');
