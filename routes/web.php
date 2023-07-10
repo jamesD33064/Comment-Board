@@ -26,7 +26,7 @@ Route::get('/profile', function () {
 
 Route::get('/auth', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/auth', [AuthController::class, 'login']);
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/manage', function () {
     return view('manage');

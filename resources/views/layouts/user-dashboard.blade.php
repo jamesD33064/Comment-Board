@@ -113,18 +113,18 @@
                             @if (Session::has('username'))
                             <li>
                                 <a href="{{route('home')}}">
-                                    <i class="metismenu-icon pe-7s-display2"></i>
+                                    <i class="pe-7s-display2"></i>
                                     留言板
                                 </a>
                             </li>
                             <li>
                                 <a href="{{route('profile')}}">
-                                    <i class="metismenu-icon pe-7s-display2"></i>
+                                    <i class="pe-7s-display2"></i>
                                     個人頁面
                                 </a>
                             </li>
                             <li class="app-sidebar__heading">
-                                <form action="{{route('logout')}}" method="post">
+                                <form action="{{route('logout')}}" method="get">
                                     @csrf
                                     <input type="hidden" name="username" value="{{ Session::get('username') }}">
                                     <button class="btn btn-primary" type="submit">
@@ -152,6 +152,8 @@
             <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
         </div>
     </div>
+
+    @yield('modal')
 
     <script src="https://cdn.jsdelivr.net/npm/axios@0.21.1/dist/axios.min.js"></script>
     <script type="text/javascript" src="https://demo.dashboardpack.com/architectui-html-free/assets/scripts/main.js"></script>

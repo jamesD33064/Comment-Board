@@ -57,6 +57,5 @@ class AuthController extends Controller
     {
         Session::forget('manager_username');
         Session::forget('username');
-        Session::forget('email');
     }
 }

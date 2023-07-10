@@ -46,6 +46,7 @@
 </div>
 @endsection
 
+@section('modal')
 <!-- Modal -->
 <div class="modal fade" id="modal_user_confirm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -64,6 +65,7 @@
         </div>
     </div>
 </div>
+@endsection
 
 @section('js')
 <script type="module" src="{{ asset('js/page_comment.js') }}"></script>
