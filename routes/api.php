@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\CommentController;
 use App\Http\Controllers\api\UserController;
+use App\Http\Controllers\api\LogController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,4 +23,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::apiResource('comment', CommentController::class);
 Route::apiResource('user', UserController::class);
+Route::get('log', [LogController::class, 'export'])->name('export-log');
+
 

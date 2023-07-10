@@ -4,7 +4,10 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+// use Illuminate\Support\Facades\Log;
+
 use App\Models\Comment;
+use App\Models\Log;
 
 class CommentController extends Controller
 {
@@ -32,6 +35,7 @@ class CommentController extends Controller
         $comment->visible = 'block';
         $comment->save();
 
+        Log::createLog($request->UserName, 'Store Comment', $request->CommentContent);
         return redirect(route('home'));
     }
 
@@ -55,9 +59,15 @@ class CommentController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $original_visible='';
+        
         $comment = Comment::find($id);
+        $original_visible = $comment->visible;
         $comment->visible = $request->visible;
         $comment->save();
+
+        $log_detail = 'Comment_id:'.$id.' ,From:'.$original_visible.' ,To:'.$request->visible;
+        Log::createLog('Manager', 'Change Comment Visible', $log_detail);
     }
 
     /**

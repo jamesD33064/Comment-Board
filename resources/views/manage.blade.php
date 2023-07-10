@@ -120,6 +120,12 @@
                     <div class="app-sidebar__inner">
                         <ul class="vertical-nav-menu">
                             <li class="app-sidebar__heading">Dashboards</li>
+                            <li>
+                                <a href="{{route('export-log')}}">
+                                    <i class="metismenu-icon pe-7s-display2"></i>
+                                    <p>匯出日誌</p>
+                                </a>
+                            </li>
                             <li class="app-sidebar__heading">
                                 <form action="{{route('manage_logout')}}" method="post">
                                     @csrf

@@ -120,7 +120,7 @@
                             <li class="app-sidebar__heading">
                                 <form action="{{route('logout')}}" method="post">
                                     @csrf
-                                    <!-- <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}"> -->
+                                    <input type="hidden" name="username" value="{{ Session::get('username') }}">
                                     <button class="btn btn-primary" type="submit">
                                         logout
                                     </button>

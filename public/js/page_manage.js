@@ -34,6 +34,12 @@ listItems.forEach(function (item) {
     });
 });
 
+function reloadPage() {
+    return new Promise(function(resolve) {
+      location.reload();
+      resolve();
+    });
+  }
 
 function send_comment(commentId, updatedData){    
     axios.put(`/api/comment/${commentId}`, updatedData)
@@ -46,15 +52,14 @@ function send_comment(commentId, updatedData){
 
 btn_none_comment.addEventListener('click', function () {
     var comment_del_id = JSON.parse(sessionStorage.getItem('comment_del_id'));
-    comment_del_id.forEach(
-        element => send_comment(element, {'visible':'none'})
-    );
-    location.reload();
+    Promise.all(comment_del_id.map(function(element) {
+    return send_comment(element, {'visible':'none'});
+    })).then(reloadPage);
 });
+
 btn_block_comment.addEventListener('click', function () {
     var comment_del_id = JSON.parse(sessionStorage.getItem('comment_del_id'));
-    comment_del_id.forEach(
-        element => send_comment(element, {'visible':'block'})
-    );
-    location.reload();
+    Promise.all(comment_del_id.map(function(element) {
+    return send_comment(element, {'visible':'block'});
+    })).then(reloadPage);
 });

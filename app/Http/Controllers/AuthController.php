@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Models\User;
 
+use App\Models\Log;
 
 class AuthController extends Controller
 {
@@ -21,8 +22,11 @@ class AuthController extends Controller
         if ($this->customAuthenticate($request)) {
             // 確認登入
             Session::put('username', $request->username);
+
+            Log::createLog($request->username, 'Login', 'Success');
             return redirect(route('home'));
         } else {
+            Log::createLog($request->username, 'Login', 'Fail');
             return redirect()->back()->withErrors(['error' => '登入失敗']);
         }
     }
@@ -31,6 +35,8 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         $this->clearUserSession();
+
+        Log::createLog($request->username, 'Logout', 'Success');
         return redirect(route('home'));
     }
 
