@@ -18,17 +18,16 @@ class AuthController extends Controller
     // 登入
     public function login(Request $request)
     {
-        // 驗證帳號
         if ($this->customAuthenticate($request)) {
-            // 確認登入
-            Session::put('username', $request->username);
-
+            // 确认登录
+            session(['username' => $request->username]);
+        
             Log::createLog($request->username, 'Login', 'Success');
             return redirect(route('home'));
         } else {
             Log::createLog($request->username, 'Login', 'Fail');
-            return redirect()->back()->withErrors(['error' => '登入失敗']);
-        }
+            return redirect()->back()->withErrors(['error' => 'Login Fail']);
+        }        
     }
 
     // 登出
@@ -40,17 +39,15 @@ class AuthController extends Controller
         return redirect(route('home'));
     }
 
-    // 驗證帳號
     private function customAuthenticate($request)
     {
         $user = User::where('UserName', $request->username)
                     ->where('Password', $request->password)
-                    ->get();
-        if (count($user) == 1) {
-            return true;
-        }
-        return false;
+                    ->exists();
+    
+        return $user;
     }
+    
 
     // 清除登入狀態
     private function clearUserSession()

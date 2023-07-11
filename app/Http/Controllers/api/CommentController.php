@@ -12,16 +12,6 @@ use App\Models\Log;
 class CommentController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        echo 'index';
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -30,24 +20,11 @@ class CommentController extends Controller
     public function store(Request $request)
     {
         $comment = new Comment;
-        $comment->UserName = $request->UserName;
-        $comment->CommentContent = $request->CommentContent;
-        $comment->visible = 'block';
+        $comment->createComment($request);
         $comment->save();
 
         Log::createLog($request->UserName, 'Store Comment', $request->CommentContent);
         return redirect(route('home'));
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        echo 'show';
     }
 
     public static function Top10_ActiviteUser(){
@@ -74,34 +51,16 @@ class CommentController extends Controller
         return $userRecords;
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        $original_visible='';
+        $comment = Comment::findOrFail($id); //如果找不到会抛error
+        $originalVisible = $comment->visible;
         
-        $comment = Comment::find($id);
-        $original_visible = $comment->visible;
-        $comment->visible = $request->visible;
-        $comment->save();
-
-        $log_detail = 'Comment_id:'.$id.' ,From:'.$original_visible.' ,To:'.$request->visible;
-        Log::createLog('Manager', 'Change Comment Visible', $log_detail);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        echo 'destroy';
+        if ($originalVisible !== $request->visible) {
+            $comment->update(['visible' => $request->visible]);
+        
+            $logDetail = 'Comment_id: ' . $id . ', From: ' . $originalVisible . ', To: ' . $request->visible;
+            Log::createLog('Manager', 'Change Comment Visible', $logDetail);
+        }
     }
 }

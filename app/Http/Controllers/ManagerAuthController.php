@@ -14,7 +14,7 @@ class ManagerAuthController extends Controller
 {
     public function showManagePage()
     {
-        if (Session::has('manager_username')) {
+        if (session('manager_username')) {
             $AllComment = Comment::all();
             $Top10_ActiviteUser = app()->call([CommentController::class, 'Top10_ActiviteUser']);
 
@@ -27,23 +27,24 @@ class ManagerAuthController extends Controller
 
     public function login(Request $request)
     {
-        // 驗證帳號
         if ($this->customAuthenticate($request)) {
             // 確認登入
-            Session::put('manager_username', $request->UserName);
+            session(['manager_username' => $request->UserName]);
+        
             Log::createLog($request->UserName, 'Manager Login', 'Success');
             return redirect()->route('manage');
+        } else {
+            Log::createLog($request->UserName, 'Manager Login', 'Fail');
+            return redirect()->back()->withErrors(['error' => 'Login Fail']);
         }
-
-        Log::createLog($request->UserName, 'Manager Login', 'Fail');
-        return redirect()->back()->withErrors(['error' => '登入失敗']);
+        
     }
 
     // 驗證帳號
     private function customAuthenticate($request)
     {
-        $manage_user = Manager_User::where('UserName', $request->UserName)->get();
-        if (count($manage_user) && $request->Password == $manage_user[0]['Password']) {
+        $manage_user = Manager_User::where('UserName', $request->UserName)->first();
+        if ($manage_user && $request->Password ==  $manage_user->Password) {
             return true;
         }
 

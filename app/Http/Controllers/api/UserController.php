@@ -10,46 +10,22 @@ use App\Models\Log;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        $user = User::where('UserName', $request->username)->get();
-        if (count($user) == 0) {
+        $user = User::where('UserName', $request->username)->first();
+
+        if (!$user) {
             $user = new User;
             $user->UserName = $request->username;
             $user->Password = $request->password;
             $user->save();
+        
             Log::createLog($request->username, 'Register New User', 'Success');
-            return redirect(route('home'));
+        } else {
+            Log::createLog($request->username, 'Register New User', 'Fail');
         }
-        Log::createLog($request->username, 'Register New User', 'Fail');
+        
         return redirect(route('home'));
-
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
     }
 
     /**
@@ -63,34 +39,33 @@ class UserController extends Controller
     {
         $oldPW = $request->input('oldPW');
         $newPW = $request->input('newPW');
-
-        $user = User::where('UserName', $id)->get();
-        if ($user[0]['Password'] == $oldPW) {
-            $user[0]->Password = $newPW;
-            $user[0]->save();
-
-            Log::createLog($user[0]['UserName'], 'Update Password', 'Success');
+        
+        $user = User::where('UserName', $id)->first();
+        
+        if ($user && $user->Password == $oldPW) {
+            $user->Password = $newPW;
+            $user->save();
+        
+            Log::createLog($user->UserName, 'Update Password', 'Success');
             return redirect(route('home'));
         }
-
-        Log::createLog($user[0]['UserName'], 'Update Password', 'Fail');
+        
+        Log::createLog($user ? $user->UserName : $id, 'Update Password', 'Fail');
         return '原密碼錯誤';
     }
 
     public function destroy($username)
     {
-        $user = User::where('UserName', $username)->get();
-        
-        if (count($user) == 1) {
-            User::destroy($user[0]['_id']);
-            // 刪除帳號成功
+        $user = User::where('UserName', $username)->first();
 
-            Log::createLog($user[0]['UserName'], 'Delete Account', 'Success');
+        if ($user) {
+            $user->delete();
+        
+            Log::createLog($user->UserName, 'Delete Account', 'Success');
             return response()->json(['message' => 'Resource deleted successfully']);
-        }
-        else{
+        } else {
             Log::createLog($username, 'Delete Account', 'Fail');
-            return response()->json(['message' => 'Resource deleted Fail']);;
-        }
+            return response()->json(['message' => 'Resource deleted Fail']);
+        }        
     }
 }
