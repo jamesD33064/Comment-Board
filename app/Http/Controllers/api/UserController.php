@@ -17,7 +17,7 @@ class UserController extends Controller
         if (!$user) {
             $user = new User;
             $user->UserName = $request->username;
-            $user->Password = $request->password;
+            $user->Password = bcrypt($request->password);
             $user->save();
         
             Log::createLog($request->username, 'Register New User', 'Success');
