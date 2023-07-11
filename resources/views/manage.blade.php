@@ -29,7 +29,7 @@
                             <div class="scroll-area-lg">
                                 <div class="scrollbar-container">
                                     <ul class="rm-list-borders rm-list-borders-scroll list-group list-group-flush" id="comment_list">
-
+                                        @if (Session::has('manager_username'))
                                         @foreach ($commentdata as $CD)
                                         <li class="list-group-item list-group-item-action single-comment" id="{{ $CD['_id'] }}">
                                             <div class="widget-content p-0">
@@ -49,6 +49,7 @@
                                             </div>
                                         </li>
                                         @endforeach
+                                        @endif
                                     </ul>
                                 </div>
                             </div>
@@ -72,6 +73,7 @@
                         </tr>
                     </thead>
                     <tbody>
+                    @if (Session::has('manager_username'))
                         @foreach ($Top10_ActiviteUser as $user => $count)
                         <tr>
                             <td class="text-center text-muted">#{{ $loop->iteration }}</td>
@@ -90,6 +92,7 @@
                             </td>
                         </tr>
                         @endforeach
+                        @endif
                     </tbody>
                 </table>
             </div>

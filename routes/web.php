@@ -20,20 +20,21 @@ use App\Http\Controllers\api\CommentController;
 
 
 Route::get('/', [CommentTableController::class, 'index'])->name('home');
-
-Route::get('/profile', function () {
-    return view('profile');
-})->name('profile');
-
 Route::get('/auth', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/auth', [AuthController::class, 'login']);
-Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::get('/manage', function () {
-    return view('manage');
-})->name('manage');
+Route::group(['middleware' => 'auth_user'], function () {
+    Route::get('/profile', function () {
+        return view('profile');
+    })->name('profile');
+    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+});
 
+// manage page
+Route::get('/manage', [ManagerAuthController::class, 'showManagePage'])->name('manage');
 Route::post('/manage', [ManagerAuthController::class, 'login'])->name('manage_login');
-Route::post('/manage_logout', [ManagerAuthController::class, 'logout'])->name('manage_logout');
 
-Route::get('/manage/Top10_ActiviteUser', [CommentController::class, 'Top10_ActiviteUser'])->name('Top10_ActiviteUser');
+Route::group(['middleware' => 'auth_manager'], function () {
+    Route::post('/manage_logout', [ManagerAuthController::class, 'logout'])->name('manage_logout');
+    Route::get('/manage/Top10_ActiviteUser', [CommentController::class, 'Top10_ActiviteUser'])->name('Top10_ActiviteUser');
+});

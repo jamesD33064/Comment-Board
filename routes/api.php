@@ -23,6 +23,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::apiResource('comment', CommentController::class);
 Route::apiResource('user', UserController::class);
-Route::get('log', [LogController::class, 'export'])->name('export-log');
 
+// Route::group(['middleware' => 'auth_manager'], function () {
+    Route::get('/log', [LogController::class, 'export'])->name('export-log');
+// });
 
