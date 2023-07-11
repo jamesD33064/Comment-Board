@@ -127,7 +127,7 @@
                                 </a>
                             </li>
                             <li class="app-sidebar__heading">
-                                <form action="{{route('manage_logout')}}" method="post">
+                                <form action="{{route('manage_logout')}}" method="get">
                                     @csrf
                                     <!-- <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}"> -->
                                     <button class="btn btn-primary" type="submit">

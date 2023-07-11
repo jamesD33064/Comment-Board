@@ -2,9 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\api\CommentController;
-use App\Http\Controllers\api\UserController;
-use App\Http\Controllers\api\LogController;
+use App\Http\Controllers\api as api;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,10 +19,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('comment', CommentController::class);
-Route::apiResource('user', UserController::class);
+Route::apiResource('comment', api\CommentController::class);
+Route::apiResource('user', api\UserController::class);
 
-// Route::group(['middleware' => 'auth_manager'], function () {
-    Route::get('/log', [LogController::class, 'export'])->name('export-log');
-// });
+Route::get('/log', [api\LogController::class, 'export'])->name('export-log');
+Route::get('/Top10_ActiviteUser', [api\CommentController::class, 'Top10_ActiviteUser'])->name('Top10_ActiviteUser');
 

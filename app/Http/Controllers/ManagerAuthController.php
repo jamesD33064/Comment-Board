@@ -12,7 +12,7 @@ use App\Models\Log;
 
 class ManagerAuthController extends Controller
 {
-    public static function showManagePage()
+    public function showManagePage()
     {
         if (Session::has('manager_username')) {
             $AllComment = Comment::all();
@@ -46,12 +46,12 @@ class ManagerAuthController extends Controller
         if (count($manage_user) && $request->Password == $manage_user[0]['Password']) {
             return true;
         }
-        
+
         return false;
     }
 
     // 登出
-    public function logout(Request $request)
+    public function logout()
     {
         Log::createLog(Session::get('manager_username'), 'Manager Logout', 'Success');
         Session::forget('manager_username');
