@@ -26,7 +26,7 @@
                         <div class="tab-pane fade show active" id="tabs-eg-77">
                             <h6 class="text-muted text-uppercase font-size-md opacity-5 font-weight-normal">ALL Comment</h6>
 
-                            <div class="scroll-area-lg">
+                            <div class="scroll-area-lg"  style="height: 70dvh;" style="height: 80%;">
                                 <div class="scrollbar-container">
                                     <ul class="rm-list-borders rm-list-borders-scroll list-group list-group-flush" id="comment_list">
                                         @if (Session::has('manager_username'))
@@ -73,20 +73,20 @@
                         </tr>
                     </thead>
                     <tbody>
-                    @if (Session::has('manager_username'))
-                        @foreach ($Top10_ActiviteUser as $user => $count)
-                        <tr>
+                        @if (Session::has('manager_username'))
+                        @foreach ($Top10_ActiviteUser as $user)
+                        <tr class="single-activityUser">
                             <td class="text-center text-muted">#{{ $loop->iteration }}</td>
                             <td>
                                 <div class="widget-content p-0">
                                     <div class="widget-content-wrapper">
                                         <div class="widget-content-left flex2">
-                                            <div class="widget-heading">{{$user}}</div>
+                                            <div class="widget-heading username_ActiviteTable">{{$user['_id']}}</div>
                                         </div>
                                     </div>
                                 </div>
                             </td>
-                            <td class="text-center">{{$count}}</td>
+                            <td class="text-center">{{$user['count']}}</td>
                             <td class="text-center">
                                 <div class="badge badge-info">Activity</div>
                             </td>
@@ -99,4 +99,52 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('modal')
+<!-- Modal -->
+<div class="modal fade" id="modal_UserInfo" tabindex="-1" aria-labelledby="userinfo" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="height: 90dvh;">
+            <div class="modal-header">
+                <h5 class="modal-title" id="userinfo">使用者資訊</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body container">
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-center p-1">
+                        <img src="https://i.postimg.cc/bryMmCQB/profile-image.jpg" alt="Profile Image" class="row rounded-circle" style="width:33%;">
+                    </div>
+                    <div class="col-12 d-flex justify-content-center p-1 text-center">
+                        <p id="AccountState_modal_UserInfo" class="bg-light p-2 rounded-3">Activity</p>
+                    </div>
+                    <div class="col-12 d-flex justify-content-center p-1 text-center">
+                        <h3> <strong id="username_modal_UserInfo"></strong> </h3>
+                    </div>
+                    <div class="col-12 d-flex justify-content-center p-1 text-center">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">visible</th>
+                                    <th scope="col">contnet</th>
+                                </tr>
+                            </thead>
+                            <tbody id="AllComment_modal_UserInfo">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary">刪除帳號</button>
+                <button id="btn_unknow_modal_confirm" type="button" class="btn btn-primary" data-bs-dismiss="modal">確認</button>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+
+@section('js')
+<script src="https://code.jquery.com/jquery-3.7.0.slim.js" integrity="sha256-7GO+jepT9gJe9LB4XFf8snVOjX3iYNb0FHYr5LI1N5c=" crossorigin="anonymous"></script>
+<script type="module" src="{{ asset('js/page_manage.js') }}"></script>
 @endsection

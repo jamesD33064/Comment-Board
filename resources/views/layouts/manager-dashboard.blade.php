@@ -17,8 +17,8 @@
         <div class="card">
             <form action="{{route('manage_login')}}" method="post">
                 @csrf
-                <input type="text" placeholder="Username" name="UserName">
-                <input type="password" placeholder="Password" name="Password">
+                <input type="text" placeholder="User Name" name="username">
+                <input type="password" placeholder="Password" name="password">
                 <div class="buttons">
                     <button type="submit" class="login-button">Login</button>
                 </div>
@@ -62,7 +62,7 @@
                 <div class="app-header-left">
                     <div class="search-wrapper">
                         <div class="input-holder">
-                            <input type="text" class="search-input" placeholder="Type to search">
+                            <input type="text" class="search-input" placeholder="Type to search" onchange="">
                             <button class="search-icon"><span></span></button>
                         </div>
                         <button class="close"></button>
@@ -121,19 +121,48 @@
                         <ul class="vertical-nav-menu">
                             <li class="app-sidebar__heading">Dashboards</li>
                             <li>
-                                <a href="{{route('export-log')}}">
-                                    <i class="metismenu-icon pe-7s-display2"></i>
-                                    <p>匯出日誌</p>
+                                <a href="{{route('manage')}}">
+                                    <p>主畫面</p>
                                 </a>
                             </li>
-                            <li class="app-sidebar__heading">
-                                <form action="{{route('manage_logout')}}" method="get">
-                                    @csrf
-                                    <!-- <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}"> -->
-                                    <button class="btn btn-primary" type="submit">
-                                        logout
-                                    </button>
-                                </form>
+                            <li>
+                                <a href="#">
+                                    帳號管理
+                                </a>
+                                <ul>
+                                    <li>
+                                        <a href="{{route('manage_supaerManager')}}">
+                                            系統管理員
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{route('manage_LV1Manager')}}">
+                                            一級管理員
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    紀錄查詢
+                                </a>
+                                <ul>
+                                    <li>
+                                        <a href="{{route('manage_logRecord')}}">
+                                            日誌紀錄
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{route('export-log')}}">
+                                            <p>匯出日誌</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="{{route('manage_logout')}}">
+                                    登出
+                                </a>
                             </li>
                         </ul>
                     </div>
@@ -141,16 +170,19 @@
             </div>
             <div class="app-main__outer">
                 <div class="app-main__inner">
-                @yield('content')
+                    @yield('content')
                 </div>
             </div>
             <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
         </div>
     </div>
 
+    @yield('modal')
+
     <script type="text/javascript" src="https://demo.dashboardpack.com/architectui-html-free/assets/scripts/main.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios@0.21.1/dist/axios.min.js"></script>
-    <script type="module" src="{{ asset('js/page_manage.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    @yield('js')
     @endif
 
 

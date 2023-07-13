@@ -13,11 +13,13 @@ class LogController extends Controller
 {
     public function export()
     {
+        // 用laravel套件
+        
         // 取得data
         $data = Log::all();
 
         // 檔名
-        $filename = 'Log.csv';
+        $filename = 'Log.xlsx';
 
         // csv檔名
         $headers = [

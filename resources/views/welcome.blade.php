@@ -18,20 +18,29 @@
                                     @endif
                                 </h1>
                             </div>
-                            <div id="chatMessages" class="overflow-auto" style="max-height: 60dvh;">
+                            <ul id="chatMessages" class="overflow-auto list-group list-group-flush container" style="height: 60dvh; width:80%;">
                                 <!-- 聊天訊息會顯示在這裡 -->
                                 @foreach ($commentdata as $CD)
-                                <div class="message">
-                                    <div class="message-sender"><strong>{{ $CD['UserName'] }}</strong></div>
-                                    <div class="message-content">&nbsp;{{ $CD['CommentContent'] }}</div>
-                                </div>
+                                <li class="row">
+                                    @if($CD['UserName'] == Session::get('username'))
+                                    <div class="col-12 d-flex justify-content-end row align-items-center">
+                                        <p class="col-10 d-flex justify-content-end m-0"><span class="bg-light px-2 rounded-3">{{ $CD['CommentContent'] }}</span></p>
+                                        <h5 class="col-2 d-flex justify-content-start m-0"><strong>{{ $CD['UserName'] }}</strong></h5>
+                                    </div>
+                                    @else
+                                    <div class="col-12 d-flex justify-content-start row align-items-center">
+                                        <h5 class="col-2 d-flex justify-content-end m-0"><strong>{{ $CD['UserName'] }}</strong></h5>
+                                        <p class="col-10 d-flex justify-content-start m-0"><span class="bg-light px-2 rounded-3">{{ $CD['CommentContent'] }}</span></p>
+                                    </div>
+                                    @endif
+                                </li>
                                 @endforeach
-                            </div>
+                            </ul>
                             <div class="mt-4">
                                 <!-- 傳送訊息 -->
                                 <form action="/api/comment" method="post" id="messageForm">
                                     <div class="input-group">
-                                        <input type="hidden" name="UserName" id="UserName" value="{{ Session::has('username') ? Session::get('username') : 'unknow' }}" required><!-- 使用者名稱 -->
+                                        <input type="hidden" name="username" id="username" value="{{ Session::has('username') ? Session::get('username') : 'unknow' }}" required><!-- 使用者名稱 -->
                                         <input type="text" class="form-control" id="CommentContent" name="CommentContent" placeholder="Type a message..." required><!-- 訊息內容 -->
                                         <button type="submit" class="btn btn-primary">Send</button>
                                     </div>

@@ -33,3 +33,7 @@ RUN chown -R www-data:www-data /var/www
 
 # 設定容器執行的命令
 CMD php artisan serve --host=0.0.0.0 --port=8000
+# 會用其他的網頁伺服器
+
+
+# cicd for production才會composer install 把環境建好＆複製整個專案

@@ -22,6 +22,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::apiResource('comment', api\CommentController::class);
 Route::apiResource('user', api\UserController::class);
 
-Route::get('/log', [api\LogController::class, 'export'])->name('export-log');
-Route::get('/Top10_ActiviteUser', [api\CommentController::class, 'Top10_ActiviteUser'])->name('Top10_ActiviteUser');
+// Route::middleware('auth_manager')->group(function() {
+    Route::get('/log', [api\LogController::class, 'export'])->name('export-log');
+    Route::get('/Top10_ActiviteUser', [api\CommentController::class, 'Top10_ActiviteUser'])->name('Top10_ActiviteUser');
+    Route::get('/getUserComment/{username}', [api\CommentController::class, 'getUserComment']);
+// });
 
+Route::apiResource('managerUser', api\ManagerUserController::class);

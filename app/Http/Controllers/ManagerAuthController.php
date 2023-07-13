@@ -12,43 +12,52 @@ use App\Models\Log;
 
 class ManagerAuthController extends Controller
 {
+    // show page
     public function showManagePage()
     {
-        if (session('manager_username')) {
+        if (session('manager_username')) {    
             $AllComment = Comment::all();
-            $Top10_ActiviteUser = app()->call([CommentController::class, 'Top10_ActiviteUser']);
-
-            Log::createLog(Session::get('manager_username'), 'Show Manage Page', 'Success');
-            return view('manage', ['commentdata' => $AllComment, 'Top10_ActiviteUser' => $Top10_ActiviteUser]);
+            $Top10_ActiviteUser = app(Comment::class)->Top10_ActiviteUser();
+            return view('manage.manage', ['commentdata' => $AllComment, 'Top10_ActiviteUser' => $Top10_ActiviteUser]);
         }
-
-        return view('manage');
+        return view('manage.manage');
+    }
+    public function showLogRecordPage()
+    {
+        if (session('manager_username')) {    
+            $AllLog = Log::all();
+            return view('manage.record.logRecord', ['logData' => $AllLog]);
+        }
+        return view('manage.record.logRecord');
+    }
+    public function showSuperManagerdPage()
+    {
+        if (session('manager_username')) {    
+            $AllLog = Log::all();
+            return view('manage.account.superManager', ['logData' => $AllLog]);
+        }
+        return view('manage.account.superManager');
+    }
+    public function showLV1ManagerdPage()
+    {
+        if (session('manager_username')) {    
+            $AllLog = Log::all();
+            return view('manage.account.LV1Manager', ['logData' => $AllLog]);
+        }
+        return view('manage.account.LV1Manager');
     }
 
+    // auth
     public function login(Request $request)
     {
-        if ($this->customAuthenticate($request)) {
+        $ManagerUser = new Manager_User;
+        if ($ManagerUser->attemptLogin($request->username, $request->password)) {
             // 確認登入
-            session(['manager_username' => $request->UserName]);
-        
-            Log::createLog($request->UserName, 'Manager Login', 'Success');
+            Log::createLog($request->username, 'Manager Login', 'Success');
             return redirect()->route('manage');
-        } else {
-            Log::createLog($request->UserName, 'Manager Login', 'Fail');
-            return redirect()->back()->withErrors(['error' => 'Login Fail']);
         }
-        
-    }
-
-    // 驗證帳號
-    private function customAuthenticate($request)
-    {
-        $manage_user = Manager_User::where('UserName', $request->UserName)->first();
-        if ($manage_user && $request->Password ==  $manage_user->Password) {
-            return true;
-        }
-
-        return false;
+        Log::createLog($request->username, 'Manager Login', 'Fail');
+        return redirect()->back()->withErrors(['error' => 'Login Fail']);
     }
 
     // 登出

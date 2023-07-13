@@ -110,32 +110,25 @@
                     <div class="app-sidebar__inner">
                         <ul class="vertical-nav-menu">
                             <li class="app-sidebar__heading">Dashboards</li>
-                            @if (Session::has('username'))
                             <li>
                                 <a href="{{route('home')}}">
-                                    <i class="pe-7s-display2"></i>
                                     留言板
                                 </a>
                             </li>
+                            @if (Session::has('username'))
                             <li>
                                 <a href="{{route('profile')}}">
-                                    <i class="pe-7s-display2"></i>
                                     個人頁面
                                 </a>
                             </li>
-                            <li class="app-sidebar__heading">
-                                <form action="{{route('logout')}}" method="get">
-                                    @csrf
-                                    <input type="hidden" name="username" value="{{ Session::get('username') }}">
-                                    <button class="btn btn-primary" type="submit">
-                                        logout
-                                    </button>
-                                </form>
+                            <li>
+                                <a href="{{route('logout')}}">
+                                    登出
+                                </a>
                             </li>
                             @else
                             <li>
                                 <a href="{{route('login')}}">
-                                    <i class="metismenu-icon pe-7s-display2"></i>
                                     登入 / 註冊
                                 </a>
                             </li>

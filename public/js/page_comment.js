@@ -20,7 +20,7 @@ function send_comment(username, content){
 
 document.getElementById('messageForm').addEventListener('submit', function(event) {
     event.preventDefault(); // 防止表單提交
-    const username = document.getElementById("UserName").value; // 取得使用者身份
+    const username = document.getElementById("username").value; // 取得使用者身份
     const comment_content = document.getElementById("CommentContent").value; // 取得輸入內容
     if( username == "unknow"){
         myModal.toggle();
