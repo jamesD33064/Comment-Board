@@ -34,7 +34,7 @@ Route::get('/manage', [ManagerAuthController::class, 'showManagePage'])->name('m
 Route::post('/manage', [ManagerAuthController::class, 'login'])->name('manage_login');
 Route::get('/manage/log', [ManagerAuthController::class, 'showLogRecordPage'])->name('manage_logRecord');
 Route::get('/manage/account/superManager', [ManagerAuthController::class, 'showSuperManagerdPage'])->name('manage_supaerManager');
-Route::get('/manage/account/LV1Manager', [ManagerAuthController::class, 'showLV1ManagerdPage'])->name('manage_LV1Manager');
+Route::get('/manage/account/RoleManage', [ManagerAuthController::class, 'showRoleManagePage'])->name('manage_RoleManage');
 
 Route::group(['middleware' => 'auth_manager'], function () {
     Route::get('/manage_logout', [ManagerAuthController::class, 'logout'])->name('manage_logout');

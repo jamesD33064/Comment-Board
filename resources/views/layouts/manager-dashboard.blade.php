@@ -5,8 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>管理</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://demo.dashboardpack.com/architectui-html-free/main.css" rel="stylesheet">
+    @yield('style')
 </head>
 
 <body>
@@ -28,7 +30,6 @@
     @else
     <!-- manage page -->
 
-    <link href="https://demo.dashboardpack.com/architectui-html-free/main.css" rel="stylesheet">
     <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
         <div class="app-header header-shadow">
             <div class="app-header__logo">
@@ -136,7 +137,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{route('manage_LV1Manager')}}">
+                                        <a href="{{route('manage_RoleManage')}}">
                                             一級管理員
                                         </a>
                                     </li>
@@ -149,11 +150,11 @@
                                 <ul>
                                     <li>
                                         <a href="{{route('manage_logRecord')}}">
-                                            日誌紀錄
+                                            <p>日誌紀錄</p>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{route('export-log')}}">
+                                        <a href="{{route('exportLog')}}">
                                             <p>匯出日誌</p>
                                         </a>
                                     </li>
@@ -178,7 +179,7 @@
     </div>
 
     @yield('modal')
-
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://demo.dashboardpack.com/architectui-html-free/assets/scripts/main.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios@0.21.1/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

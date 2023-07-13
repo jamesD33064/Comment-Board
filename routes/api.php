@@ -23,7 +23,7 @@ Route::apiResource('comment', api\CommentController::class);
 Route::apiResource('user', api\UserController::class);
 
 // Route::middleware('auth_manager')->group(function() {
-    Route::get('/log', [api\LogController::class, 'export'])->name('export-log');
+    Route::get('/log', [api\LogController::class, 'export'])->name('exportLog');
     Route::get('/Top10_ActiviteUser', [api\CommentController::class, 'Top10_ActiviteUser'])->name('Top10_ActiviteUser');
     Route::get('/getUserComment/{username}', [api\CommentController::class, 'getUserComment']);
 // });

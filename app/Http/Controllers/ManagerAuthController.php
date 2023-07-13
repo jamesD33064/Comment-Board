@@ -25,7 +25,7 @@ class ManagerAuthController extends Controller
     public function showLogRecordPage()
     {
         if (session('manager_username')) {    
-            $AllLog = Log::all();
+            $AllLog = Log::orderBy('created_at', 'desc')->get();
             return view('manage.record.logRecord', ['logData' => $AllLog]);
         }
         return view('manage.record.logRecord');
@@ -38,13 +38,13 @@ class ManagerAuthController extends Controller
         }
         return view('manage.account.superManager');
     }
-    public function showLV1ManagerdPage()
+    public function showRoleManagePage()
     {
         if (session('manager_username')) {    
             $AllLog = Log::all();
-            return view('manage.account.LV1Manager', ['logData' => $AllLog]);
+            return view('manage.account.roleManage', ['logData' => $AllLog]);
         }
-        return view('manage.account.LV1Manager');
+        return view('manage.account.roleManage');
     }
 
     // auth

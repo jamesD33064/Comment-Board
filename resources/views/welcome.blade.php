@@ -41,7 +41,7 @@
                                 <form action="/api/comment" method="post" id="messageForm">
                                     <div class="input-group">
                                         <input type="hidden" name="username" id="username" value="{{ Session::has('username') ? Session::get('username') : 'unknow' }}" required><!-- 使用者名稱 -->
-                                        <input type="text" class="form-control" id="CommentContent" name="CommentContent" placeholder="Type a message..." required><!-- 訊息內容 -->
+                                        <input type="text" class="form-control" id="CommentContent" name="CommentContent" placeholder="Type a message..." required autofocus><!-- 訊息內容 -->
                                         <button type="submit" class="btn btn-primary">Send</button>
                                     </div>
                                 </form>
