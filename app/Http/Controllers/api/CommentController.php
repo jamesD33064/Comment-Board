@@ -19,15 +19,11 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
+
         $comment = new Comment;
         $comment->createComment($request);
         $comment->save();
-
-        if($request->username){
-            Log::createLog($request->username, 'Store Comment', $request->CommentContent);
-        } else {
-            Log::createLog('unknow', 'Store Comment', $request->CommentContent);
-        }
+        Log::createLog($request->UserName, 'Store Comment', $request->CommentContent);
 
         return redirect(route('home'));
     }

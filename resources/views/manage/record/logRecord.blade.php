@@ -10,19 +10,19 @@
 <table class="table display" id="logTable">
     <thead>
         <tr>
-            <th scope="col">user_id</th>
-            <th scope="col">action</th>
-            <th scope="col">details</th>
-            <th scope="col">created_at</th>
+            <th scope="col">創建時間</th>
+            <th scope="col">使用者名稱</th>
+            <th scope="col">操作</th>
+            <th scope="col">詳細內容</th>
         </tr>
     </thead>
     <tbody>
-        @foreach($logData as $log)
-        <tr id="{{$log['_id']}}">
-            <td scope="row" class="user_id">{{$log['user_id']}}</th>
-            <td class="action">{{$log['action']}}</td>
-            <td class="details">{{$log['details']}}</td>
-            <td class="created_at">{{$log['created_at']}}</td>
+        @foreach($logData as $row)
+        <tr id="{{$row['_id']}}">
+            <td class="created_at">{{$row['created_at']}}</td>
+            <td scope="row" class="user_id">{{$row['user_id']}}</th>
+            <td class="action">{{$row['action']}}</td>
+            <td class="details">{{$row['details']}}</td>
         </tr>
         @endforeach
     </tbody>
@@ -33,8 +33,6 @@
 @endsection
 
 @section('js')
-<script type="text/javascript" src="jquery.dataTables.js"></script>
-<script type="text/javascript" src="dataTables.search.html.js"></script>
 <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.js"></script>
 <script type="module" src="{{ asset('js/manage/page_logRecord.js') }}"></script>
 @endsection

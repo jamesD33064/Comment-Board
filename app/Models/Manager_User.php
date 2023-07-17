@@ -3,23 +3,29 @@
 namespace App\Models;
 
 // use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Auth\Authenticatable as AuthenticableTrait;
 use Jenssegers\Mongodb\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 
-class Manager_User extends Model
+class Manager_User extends Model implements Authenticatable
 {
+
+    use AuthenticableTrait;
+
     protected $connection = 'mongodb';
     protected $collection = 'manager_user';
-    protected $fillable = ['_id','Username', 'Password', 'PermissionLV'];
+    protected $fillable = ['_id','Username', 'Password', 'PermissionLV', 'AccountState'];
 
-    public function createUser($Username, $Password, $PermissionLV)
+    public function createUser($data)
     {
         $this->fill([
-            'Username' => $Username,
-            'Password' => Hash::make($Password),
-            'PermissionLV' => $PermissionLV
+            'Username' => $data['username'],
+            'Password' => Hash::make($data['password']),
+            'PermissionLV' => $data['permissionRole'],
+            'AccountState' => $data['accountState']
         ]);
     }
 
@@ -62,11 +68,9 @@ class Manager_User extends Model
                 $manage_user &&
                 $password ==  $manage_user->Password
                 );
+    }
 
-        // $user = self::where('Username', $username)->first();
-        // return (
-        //         $user &&
-        //         Hash::check($password, $user->Password)
-        //         );
+    public function getRole($_id){
+        return self::where('_id',$_id)->first()->_id;
     }
 }

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\api\CommentController;
 
+use App\Models\PermissionRole;
 use App\Models\Manager_User;
 use App\Models\Comment;
 use App\Models\Log;
@@ -15,36 +16,36 @@ class ManagerAuthController extends Controller
     // show page
     public function showManagePage()
     {
-        if (session('manager_username')) {    
-            $AllComment = Comment::all();
-            $Top10_ActiviteUser = app(Comment::class)->Top10_ActiviteUser();
-            return view('manage.manage', ['commentdata' => $AllComment, 'Top10_ActiviteUser' => $Top10_ActiviteUser]);
-        }
-        return view('manage.manage');
+        $AllComment = Comment::orderBy('created_at', 'desc')->get();
+        $Top10_ActiviteUser = app(Comment::class)->Top10_ActiviteUser();
+        $PermissionRole = PermissionRole::where('RoleName', '!=', "0")->get();
+        return view('manage.manage', ['commentdata' => $AllComment, 'Top10_ActiviteUser' => $Top10_ActiviteUser, 'permissionRoleData' => $PermissionRole]);
     }
     public function showLogRecordPage()
     {
-        if (session('manager_username')) {    
-            $AllLog = Log::orderBy('created_at', 'desc')->get();
-            return view('manage.record.logRecord', ['logData' => $AllLog]);
-        }
-        return view('manage.record.logRecord');
+        $AllLog = Log::orderBy('created_at', 'desc')->get();
+        $PermissionRole = PermissionRole::where('RoleName', '!=', "0")->get();
+        return view('manage.record.logRecord', ['logData' => $AllLog, 'permissionRoleData' => $PermissionRole]);
     }
     public function showSuperManagerdPage()
     {
-        if (session('manager_username')) {    
-            $AllLog = Log::all();
-            return view('manage.account.superManager', ['logData' => $AllLog]);
-        }
-        return view('manage.account.superManager');
+        // $AllManager_User = Manager_User::where('PermissionLV', '0')->orderBy('created_at', 'desc')->get();
+        $AllManager_User = Manager_User::orderBy('created_at', 'desc')->get();
+        $PermissionRole = PermissionRole::where('RoleName', '!=', "0")->get();
+        return view('manage.account.superManager', ['accountData' => $AllManager_User, 'permissionRoleData' => $PermissionRole]);
     }
     public function showRoleManagePage()
     {
-        if (session('manager_username')) {    
-            $AllLog = Log::all();
-            return view('manage.account.roleManage', ['logData' => $AllLog]);
-        }
-        return view('manage.account.roleManage');
+        $PermissionRole = PermissionRole::where('RoleName', '!=', "0")->get();
+        return view('manage.account.roleManage', ['permissionRoleData' => $PermissionRole]);
+    }
+    public function showPermissionRolePage($roleName)
+    {
+        $AllManager_User = Manager_User::where('PermissionLV', $roleName)
+                                        ->where('PermissionLV', '!=', "0")
+                                        ->orderBy('created_at', 'desc')->get();
+        $PermissionRole = PermissionRole::where('RoleName', '!=', "0")->get();
+        return view('manage.account.PermissionRole', ['roleName'=>$roleName, 'accountData' => $AllManager_User, 'permissionRoleData' => $PermissionRole]);
     }
 
     // auth

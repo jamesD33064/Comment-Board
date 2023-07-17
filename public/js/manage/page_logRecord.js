@@ -33,5 +33,6 @@
 $(document).ready(function () {
     $('#logTable').DataTable({
         paging: true,
+        order: [[0, 'desc']]
     });
 });

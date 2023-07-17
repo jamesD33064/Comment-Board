@@ -138,9 +138,16 @@
                                     </li>
                                     <li>
                                         <a href="{{route('manage_RoleManage')}}">
-                                            一級管理員
+                                            角色管理
                                         </a>
                                     </li>
+                                    @foreach ($permissionRoleData as $row)
+                                    <li>
+                                        <a href="{{route('manage_PermissionRole',['roleName'=>$row['RoleName']])}}">
+                                        權限：{{$row['RoleName']}}
+                                        </a>
+                                    </li>
+                                    @endforeach
                                 </ul>
                             </li>
                             <li>

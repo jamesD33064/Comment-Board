@@ -5,19 +5,18 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Models\Manager_User;
+use App\Models\PermissionRole;
 use App\Models\Log;
 
-class ManagerUserController extends Controller
+class PermissionRoleController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
     }
 
     /**
@@ -28,19 +27,17 @@ class ManagerUserController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->only(['username', 'password', 'permissionRole', 'accountState']);
-
-        if (!app(Manager_User::class)->validate($data['username'], $data['password'])) {            
-            $Manager_User = new Manager_User;
-            $Manager_User->createUser($data);
-            $Manager_User->save();
+        $PermissionRole = new PermissionRole;
         
-            Log::createLog($request->username, 'Register New Manager', 'Success');
-        } else {
-            Log::createLog($request->username, 'Register New Manager', 'Fail');
+        if($PermissionRole->createRole($request->RoleName, $request->Permission)){
+            $PermissionRole->save();
+            Log::createLog($request->RoleName, 'New Permission Role', 'Success');
+            return true;
         }
-        return redirect(route('manage'));
+        Log::createLog($request->RoleName, 'New Permission Role', 'fail');
+        return false;
     }
+
 
     /**
      * Display the specified resource.

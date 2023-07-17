@@ -6,13 +6,7 @@
     @endsection
 
     @section('content')
-    <h3>帳號管理 / 系統管理員</h3>
-
-    <div class="py-4">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal_manager_register">
-            新增帳號
-        </button>
-    </div>
+    <h3>帳號管理 / 權限：{{$roleName}}</h3>
 
     <div class="card">
         <div class="card-body">
@@ -20,14 +14,14 @@
                 <thead>
                     <tr>
                         <th scope="col">姓名</th>
-                        <th scope="col">帳號權限</th>
+                        <th scope="col">帳號狀態</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($accountData as $row)
                     <tr id="{{$row['_id']}}">
                         <td class="created_at">{{$row['Username']}}</td>
-                        <td scope="row" class="user_id">{{$row['PermissionLV']}}</th>
+                        <td scope="row" class="user_id">{{$row['AccountState']}}</th>
                     </tr>
                     @endforeach
                 </tbody>
@@ -80,5 +74,5 @@
 
     @section('js')
     <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.js"></script>
-    <script type="module" src="{{ asset('js/manage/page_superManager.js') }}"></script>
+    <script type="module" src="{{ asset('js/manage/page_permissionRole.js') }}"></script>
     @endsection
