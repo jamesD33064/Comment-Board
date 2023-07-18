@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Models\PermissionRole;
 use Nette\Utils\Json;
+use Illuminate\Http\Response;
 
 class CheckApiPermission
 {
@@ -19,35 +20,60 @@ class CheckApiPermission
      */
     public function handle(Request $request, Closure $next)
     {
+        $apiPath = $request->getRequestUri();
+        $method = $request->method();
         $permission = Session::get('PermissionLV');
+        $permissionFlag = false;
 
-        if ($permission == "0") {
+
+        if (!strstr($apiPath, "/manage/") && !strstr($apiPath, "api")) {
+            // switch($apiPath){
+            //     case "/api/user":
+            //         break;
+            // }
+            $permissionFlag = true;
+        } else {    //管理頁面
+            if ($permission == "0") { //超管
+                $permissionFlag = true;
+            } else { //不是超管
+                $permissionRole = PermissionRole::where("RoleName", $permission)->first();
+                $permission = json_decode($permissionRole['Permission']);
+                switch ($apiPath) {
+                    case "/api/log": //Export log
+                        $permissionFlag = ($method == "GET" &&
+                            $permission->checkRecord->log->Export);
+                        break;
+                    case "/api/managerUser": //Creat Manager
+                        $permissionFlag = ($method == "POST" &&
+                            $permission->accountManage->admin->C);
+                        break;
+                    case (strstr($apiPath, "/api/managerUser") && ($method == "PUT" || $method == "PATCH")): //Update Manager
+                        $permissionFlag = $permission->accountManage->admin->U;
+                        break;
+                    case (strstr($apiPath, "/api/managerUser") && ($method == "DELETE")): //Delete Manager
+                        $permissionFlag =  $permission->accountManage->admin->D;
+                        break;
+                    case "/api/permissionRole": //Creat Permission Role
+                        $permissionFlag = ($method == "POST" &&
+                            $permission->accountManage->role->C);
+                        break;
+                    case (strstr($apiPath, "/api/permissionRole") && ($method == "PUT" || $method == "PATCH")): //Delete Permission Role
+                        $permissionFlag =  $permission->accountManage->role->U;
+                        break;
+                    case (strstr($apiPath, "/api/permissionRole") && ($method == "DELETE")): //Delete Permission Role
+                        $permissionFlag =  $permission->accountManage->role->D;
+                        break;
+                }
+            }
+        }
+
+        if ($permissionFlag) {
             return $next($request);
         } else {
-            $permissionFlag = 0;
+            $response = new Response();
+            $response->setContent('no Permission');
 
-            $permissionRole = PermissionRole::where("RoleName", $permission)->first();
-            $permission = json_decode($permissionRole['Permission']);
-            $apiPath = $request->getRequestUri();
-            $method = $request->method();
-
-            switch ($apiPath) {
-                case "/api/log":
-                    $permissionFlag = ($method == "GET" && $permission->checkRecord->log->Export); //Export log
-                    break;
-                case "/api/managerUser":
-                    $permissionFlag = ($method == "POST" && $permission->accountManage->admin->C); //Creat Manager
-                    break;
-                case "/api/permissionRole":
-                    $permissionFlag = ($method == "POST" && $permission->accountManage->role->C); //Creat Permission Role
-                    break;
-            }
-
-            if ($permissionFlag) {
-                return $next($request);
-            } else {
-                return redirect(route('manage'));
-            }
+            return $response;
         }
     }
 }

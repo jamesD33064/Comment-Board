@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\PermissionRole;
+use App\Models\Manager_User;
 use App\Models\Log;
 
 class PermissionRoleController extends Controller
@@ -59,7 +60,12 @@ class PermissionRoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // return $request->Permission['accountManage']['role']['C'];
+        $role = PermissionRole::find($id);
+        $role->Permission = $request->Permission;
+        $role->save();
+        
+        return "更新成功";
     }
 
     /**
@@ -70,6 +76,11 @@ class PermissionRoleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $role = PermissionRole::find($id);
+        if(!Manager_User::where('PermissionLV',$role->RoleName)->exists()){
+            $role->delete();
+            return '刪除成功';
+        }
+        return '有管理者使用這個權限';
     }
 }
