@@ -33,10 +33,9 @@ Route::group(['middleware' => 'auth_user'], function () {
 Route::get('/manage', [ManagerAuthController::class, 'showManagePage'])->name('manage');
 Route::post('/manage', [ManagerAuthController::class, 'login'])->name('manage_login');
 
-Route::group(['middleware' => 'auth_manager'], function () {
-    Route::get('/manage/log', [ManagerAuthController::class, 'showLogRecordPage'])->name('manage_logRecord');
-    Route::get('/manage/account/superManager', [ManagerAuthController::class, 'showSuperManagerdPage'])->name('manage_supaerManager');
-    Route::get('/manage/account/RoleManage', [ManagerAuthController::class, 'showRoleManagePage'])->name('manage_RoleManage');
-    Route::get('/manage/account/{roleName}', [ManagerAuthController::class, 'showPermissionRolePage'])->name('manage_PermissionRole');
-    Route::get('/manage_logout', [ManagerAuthController::class, 'logout'])->name('manage_logout');
-});
+Route::get('/manage/log', [ManagerAuthController::class, 'showLogRecordPage'])->name('manage_logRecord');
+Route::get('/manage/account/superManager', [ManagerAuthController::class, 'showSuperManagerdPage'])->name('manage_supaerManager');
+Route::get('/manage/account/RoleManage', [ManagerAuthController::class, 'showRoleManagePage'])->name('manage_RoleManage');
+Route::get('/manage/account/{roleName}', [ManagerAuthController::class, 'showPermissionRolePage'])->name('manage_PermissionRole');
+Route::get('/manage_logout', [ManagerAuthController::class, 'logout'])->name('manage_logout');
+

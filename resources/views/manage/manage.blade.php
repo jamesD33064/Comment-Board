@@ -29,7 +29,7 @@
                             <div class="scroll-area-lg"  style="height: 70dvh;" style="height: 80%;">
                                 <div class="scrollbar-container">
                                     <ul class="rm-list-borders rm-list-borders-scroll list-group list-group-flush" id="comment_list">
-                                        @if (Session::has('manager_username'))
+                                        @if (Auth::check())
                                         @foreach ($commentdata as $CD)
                                         <li class="list-group-item list-group-item-action single-comment" id="{{ $CD['_id'] }}">
                                             <div class="widget-content p-0">
@@ -73,7 +73,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @if (Session::has('manager_username'))
+                        @if (Auth::check())
                         @foreach ($Top10_ActiviteUser as $user)
                         <tr class="single-activityUser">
                             <td class="text-center text-muted">#{{ $loop->iteration }}</td>

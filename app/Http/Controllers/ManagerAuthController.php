@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\api\CommentController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
 
 use App\Models\PermissionRole;
 use App\Models\Manager_User;
+use App\Models\Manager;
 use App\Models\Comment;
 use App\Models\Log;
 
@@ -48,24 +51,33 @@ class ManagerAuthController extends Controller
         return view('manage.account.PermissionRole', ['roleName'=>$roleName, 'accountData' => $AllManager_User, 'permissionRoleData' => $PermissionRole]);
     }
 
-    // auth
-    public function login(Request $request)
-    {
-        $ManagerUser = new Manager_User;
-        if ($ManagerUser->attemptLogin($request->username, $request->password)) {
-            // 確認登入
-            Log::createLog($request->username, 'Manager Login', 'Success');
+    // 登入
+    public function login(Request $request){
+        $request->validate([
+            'username' => 'required',
+            'password' => 'required',
+        ], [
+            'username.required' => '請填入帳號',
+            'password.required' => '請填入密碼',
+        ]);
+        $credentials = $request->only('username', 'password');
+        if (Auth::attempt($credentials)) {
             return redirect()->route('manage');
+        } else {
+            if (Manager::where('username', $credentials['username'])->exists()) {
+                return redirect()->back()->withErrors(['password' => '密碼錯誤'])->withInput($request->except('password'));
+            } else {
+                return redirect()->back()->withErrors(['username' => '帳號不存在'])->withInput($request->except('password'));
+            }
         }
-        Log::createLog($request->username, 'Manager Login', 'Fail');
-        return redirect()->back()->withErrors(['error' => 'Login Fail']);
     }
 
     // 登出
-    public function logout()
+    public function logout(Request $request): RedirectResponse
     {
-        Log::createLog(Session::get('manager_username'), 'Manager Logout', 'Success');
-        Session::forget('manager_username');
-        return redirect(route('manage'));
+        Auth::logout();     
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/manage');
     }
 }
