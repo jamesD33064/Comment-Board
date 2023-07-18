@@ -70,6 +70,41 @@ btn_block_comment.addEventListener('click', function () {
 
 
 /**
+ * 顯示高活躍使用者
+ */
+const ActivityUser = async () => {
+    try {
+        const response = await axios.get('http://localhost:8000/api/Top10_ActiviteUser');
+        const comments = response.data;
+        const $commentList = $('#ActivityUserTable');
+        var loopIteration = 1;
+        comments.forEach(e => {
+            $commentList.append(`
+        <tr class="single-activityUser">
+            <td class="text-center text-muted">${loopIteration}</td>
+            <td>
+                <div class="widget-content p-0">
+                    <div class="widget-content-wrapper">
+                        <div class="widget-content-left flex2">
+                            <div class="widget-heading username_ActiviteTable">${e._id}</div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td class="text-center">${e.count}</td>
+            <td class="text-center">
+                <div class="badge badge-info">Activity</div>
+            </td>
+        </tr>
+        `);
+        loopIteration++;
+        });
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
+};
+ActivityUser();
+/**
  * 點擊使用者跳出使用者訊息
  */
 async function getUserComments(username) {

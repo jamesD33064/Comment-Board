@@ -33,6 +33,11 @@ class CommentController extends Controller
         return $comment->getUserComment($username);
     }
 
+    public function Top10_ActiviteUser(){
+        return app(Comment::class)->Top10_ActiviteUser()->toArray();
+        // return 'a';
+    }
+
     public function update(Request $request, $id)
     {
         $comment = Comment::findOrFail($id); //如果找不到會抛error
