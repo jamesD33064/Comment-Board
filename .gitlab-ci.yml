@@ -3,11 +3,9 @@ image: docker-hub.program.com.tw/bikonnect-pluspay/php8.1-mongodb:dev
 stages:
   - test
 
-cs_fixer:
+cs_test:
   stage: test
   tags:
     - docker
   script:
-    - apt-get install wget
-    - wget https://squizlabs.github.io/PHP_CodeSniffer/phpcbf.phar --no-check-certificate
-    - phpcbf --standard=PSR12 --report-diff=/report.txt /
+    - php-cs-fixer fix
