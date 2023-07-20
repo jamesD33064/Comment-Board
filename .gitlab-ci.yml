@@ -3,7 +3,6 @@ stages:
 
 variables:
   # 定義 Laravel 專案中的 .env 檔案設定（替換為您的實際設定）
-  DB_HOST: localhost
   DB_CONNECTION: mongodb
   DB_HOST: database
   DB_PORT: 27017
