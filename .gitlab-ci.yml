@@ -1,14 +1,21 @@
-image: docker-hub.program.com.tw/iotg-hub/php-gitlab-ci:latest
-
 stages:
   - test
 
-cs_test:
-  stage: test
-  tags:
-    - docker
-  before_script:
-    - curl -OL https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar
-  script:
-    - php phpcs.phar --standard=./phpcs.xml --report=diff --report-full
+variables:
+  # 定義 Laravel 專案中的 .env 檔案設定（替換為您的實際設定）
+  DB_HOST: localhost
+  DB_CONNECTION: mongodb
+  DB_HOST: database
+  DB_PORT: 27017
+  DB_DATABASE: laravel
+  DB_USERNAME: root
+  DB_PASSWORD: root
 
+test:
+  stage: test
+  image: composer:latest
+  script:
+    # 安裝 Laravel 專案的相依套件
+    - composer install
+    # 執行 Laravel 測試
+    - php artisan test
