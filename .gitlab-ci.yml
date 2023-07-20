@@ -7,6 +7,9 @@ cs_test:
   stage: test
   tags:
     - docker
+  before_script:
+  - apt-get update
+  - apt-get install -y ssh
   script:
     - php-cs-fixer fix app/
 
