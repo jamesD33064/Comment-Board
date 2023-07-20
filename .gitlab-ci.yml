@@ -10,9 +10,9 @@ variables:
   DB_USERNAME: root
   DB_PASSWORD: root
 
-# 定義測試工作階段
 test:
   stage: test
+  image: composer:latest
   script:
     - cp .env.example .env  # 將 .env.example 複製為 .env
     - composer install --no-interaction --prefer-dist  # 安裝 Composer 依賴
