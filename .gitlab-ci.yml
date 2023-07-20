@@ -8,4 +8,4 @@ cs_test:
   tags:
     - docker
   script:
-    - php-cs-fixer fix /app
+    - php-cs-fixer fix app/
