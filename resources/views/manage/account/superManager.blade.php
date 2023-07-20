@@ -9,7 +9,7 @@
     <h3>帳號管理 / 系統管理員</h3>
 
     <div class="py-4">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal_manager_register">
+        <button type="button" id="btn_managerRegister" class="btn btn-primary">
             新增帳號
         </button>
     </div>
@@ -26,8 +26,8 @@
                 <tbody>
                     @foreach($accountData as $row)
                     <tr class="single-manager" id="{{$row['_id']}}">
-                        <td class="username_accountTable">{{$row['Username']}}</td>
-                        <td scope="row" class="Permission_accountTable">{{$row['PermissionLV']}}</th>
+                        <td class="username_accountTable">{{$row['username']}}</td>
+                        <td scope="row" class="Permission_accountTable">{{$row['permission']}}</th>
                     </tr>
                     @endforeach
                 </tbody>
@@ -45,34 +45,32 @@
                     <h5 class="modal-title" id="exampleModalLabel">新增管理員</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="/api/managerUser" method="post">
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label for="username" class="form-label">Name</label>
-                            <input type="text" class="form-control" id="username" name="username" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="password" name="password" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="permissionRole" class="form-label">permissionRole</label>
-                            <select class="form-select" aria-label="Default select example" type="text" id="permissionRole" name="permissionRole" required>
-                                @foreach($permissionRoleData as $row)
-                                <option value="{{$row['RoleName']}}">{{$row['RoleName']}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="accountState" class="form-label">accountState</label>
-                            <input type="text" class="form-control" id="accountState" name="accountState" required>
-                        </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="username" name="username" required>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-                        <button type="submit" class="btn btn-primary">Register</button>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" required>
                     </div>
-                </form>
+                    <div class="mb-3">
+                        <label for="permission" class="form-label">permissionRole</label>
+                        <select class="form-select" aria-label="Default select example" type="text" id="permission" name="permission" required>
+                            @foreach($permissionRoleData as $row)
+                            <option value="{{$row['RoleName']}}">{{$row['RoleName']}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="status" class="form-label">accountState</label>
+                        <input type="text" class="form-control" id="status" name="status" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button id="btn_modal_managerRegister" type="submit" class="btn btn-primary">Register</button>
+                </div>
             </div>
         </div>
     </div>
@@ -88,7 +86,7 @@
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="username" class="form-label">帳號名稱</label>
-                        <input type="text" class="form-control" id="modal_manager_update_username" name="username"  disabled readonly>
+                        <input type="text" class="form-control" id="modal_manager_update_username" name="username" disabled readonly>
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">新密碼</label>

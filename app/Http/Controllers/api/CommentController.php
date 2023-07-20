@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\Comment;
-use App\Models\User;
 use App\Models\Log;
 
 class CommentController extends Controller

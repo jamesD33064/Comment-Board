@@ -27,10 +27,10 @@ class Manager extends Model implements Authenticatable
         $this->fill([
             'username' => $data['username'],
             'password' => Hash::make($data['password']),
-            'name' => $data['name'],
+            'name' => $data['username'],
             'email' => '@',
             'status' => $data['status'],
-            'permission' => '0'
+            'permission' => $data['permission'],
         ]);
     }
 }

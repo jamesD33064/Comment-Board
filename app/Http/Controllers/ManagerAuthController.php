@@ -3,13 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
-use App\Http\Controllers\api\CommentController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 
 use App\Models\PermissionRole;
-use App\Models\Manager_User;
 use App\Models\Manager;
 use App\Models\Comment;
 use App\Models\Log;
@@ -33,7 +30,7 @@ class ManagerAuthController extends Controller
     public function showSuperManagerdPage()
     {
         // $AllManager_User = Manager_User::where('PermissionLV', '0')->orderBy('created_at', 'desc')->get();
-        $AllManager_User = Manager_User::orderBy('created_at', 'desc')->get();
+        $AllManager_User = Manager::orderBy('created_at', 'desc')->get();
         $PermissionRole = PermissionRole::where('RoleName', '!=', "0")->get();
         return view('manage.account.superManager', ['accountData' => $AllManager_User, 'permissionRoleData' => $PermissionRole]);
     }
@@ -44,8 +41,8 @@ class ManagerAuthController extends Controller
     }
     public function showPermissionRolePage($roleName)
     {
-        $AllManager_User = Manager_User::where('PermissionLV', $roleName)
-                                        ->where('PermissionLV', '!=', "0")
+        $AllManager_User = Manager::where('permission', $roleName)
+                                        ->where('permission', '!=', "0")
                                         ->orderBy('created_at', 'desc')->get();
         $PermissionRole = PermissionRole::where('RoleName', '!=', "0")->get();
         return view('manage.account.PermissionRole', ['roleName'=>$roleName, 'accountData' => $AllManager_User, 'permissionRoleData' => $PermissionRole]);

@@ -1,3 +1,6 @@
+/**
+ * 管理帳號表格
+ */
 $(document).ready(function () {
     $('#accountTable').DataTable({
         paging: true,
@@ -5,7 +8,37 @@ $(document).ready(function () {
     });
 });
 
+/**
+ * 新增管理員
+ */
+const modal_manager_register = new bootstrap.Modal(document.getElementById('modal_manager_register'), {
+    keyboard: false
+})
+document.getElementById('btn_managerRegister').addEventListener('click', function () {
+    modal_manager_register.toggle();
+});
 
+document.getElementById("btn_modal_managerRegister").addEventListener('click', function () {
+    //send requests
+    axios.post("/api/manager", {
+        username: document.getElementById('username').value,
+        password: document.getElementById('password').value,
+        permission: document.getElementById('permission').value,
+        status: document.getElementById('status').value,
+        name: document.getElementById('username').value,
+        email: '@'
+    }).then(response => {
+        alert(response.data);
+        location.reload();
+    }).catch(error => {
+        console.error(error);
+    });
+});
+
+
+/**
+ * 更新管理員資訊
+ */
 const modal_manager_update = new bootstrap.Modal(document.getElementById('modal_manager_update'), {
     keyboard: false
 })
@@ -30,23 +63,20 @@ document.querySelectorAll('.single-manager').forEach((row) => {
     });
 });
 
+// update
 function send_update(username, action, _id, Password, Permission) {
-    axios.put('/api/managerUser/' + username, {
+    axios.put('/api/manager/' + username, {
         action: action,
         _id: _id,
         Password: Password,
         Permission: Permission
-    })
-        .then(response => {
-            alert(response.data);
-            // modal_manager_update.toggle();
-            location.reload();
-        })
-        .catch(error => {
-            console.error(error);
-        });
+    }).then(response => {
+        alert(response.data);
+        location.reload();
+    }).catch(error => {
+        console.error(error);
+    });
 }
-// modal 按鈕
 document.getElementById("modal_manager_update_confirm").addEventListener("click", function () {
     const password = document.getElementById("modal_manager_update_password").value;
     const passwordAgain = document.getElementById("modal_manager_update_passwordAgain").value;
@@ -62,8 +92,10 @@ document.getElementById("modal_manager_update_confirm").addEventListener("click"
         send_update(click_table_username, "updatePassword", click_table_userid, password, '');
     }
 });
-function send_delete(username) {
-    axios.delete('/api/managerUser/' + username)
+
+// delete manager
+function send_delete(userid) {
+    axios.delete('/api/manager/' + userid)
         .then(response => {
             alert(response.data);
             location.reload();
