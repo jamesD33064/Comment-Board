@@ -9,3 +9,10 @@ cs_test:
     - docker
   script:
     - php-cs-fixer fix app/
+
+    - git config user.email "james.huang@program.com.tw"
+    - git config user.name "james.huang"
+    - git remote add gitlab_origin git@gitlab1.program.com.tw:BackendGroup/freshman/now/202307-james/comment.git
+    - git add .
+    - git commit -m "push back from pipeline"
+    - git push gitlab_origin ci_test -o ci.skip
