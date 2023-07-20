@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\Comment;
-use App\Models\User;
 use App\Models\Log;
 
 class CommentController extends Controller
@@ -31,6 +30,11 @@ class CommentController extends Controller
     public function getUserComment($username){
         $comment = new Comment;
         return $comment->getUserComment($username);
+    }
+
+    public function Top10_ActiviteUser(){
+        return app(Comment::class)->Top10_ActiviteUser()->toArray();
+        // return 'a';
     }
 
     public function update(Request $request, $id)

@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    @if (!Session::has('manager_username'))
+    @if (!Auth::check())
     <link href="{{ asset('css/page_manage.css') }}" rel="stylesheet">
     <!-- login form -->
     <div class="container">
@@ -75,7 +75,7 @@
                             <div class="widget-content-wrapper">
                                 <div class="widget-content-left  ml-3 header-user-info">
                                     <div class="widget-heading">
-                                        {{Session::get('manager_username')}}
+                                        {{Auth::user()->username}}
                                     </div>
                                 </div>
                             </div>

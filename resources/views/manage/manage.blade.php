@@ -26,10 +26,10 @@
                         <div class="tab-pane fade show active" id="tabs-eg-77">
                             <h6 class="text-muted text-uppercase font-size-md opacity-5 font-weight-normal">ALL Comment</h6>
 
-                            <div class="scroll-area-lg"  style="height: 70dvh;" style="height: 80%;">
+                            <div class="scroll-area-lg" style="height: 70dvh;" style="height: 80%;">
                                 <div class="scrollbar-container">
                                     <ul class="rm-list-borders rm-list-borders-scroll list-group list-group-flush" id="comment_list">
-                                        @if (Session::has('manager_username'))
+                                        @if (Auth::check())
                                         @foreach ($commentdata as $CD)
                                         <li class="list-group-item list-group-item-action single-comment" id="{{ $CD['_id'] }}">
                                             <div class="widget-content p-0">
@@ -72,28 +72,10 @@
                             <th class="text-center">Status</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        @if (Session::has('manager_username'))
-                        @foreach ($Top10_ActiviteUser as $user)
-                        <tr class="single-activityUser">
-                            <td class="text-center text-muted">#{{ $loop->iteration }}</td>
-                            <td>
-                                <div class="widget-content p-0">
-                                    <div class="widget-content-wrapper">
-                                        <div class="widget-content-left flex2">
-                                            <div class="widget-heading username_ActiviteTable">{{$user['_id']}}</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="text-center">{{$user['count']}}</td>
-                            <td class="text-center">
-                                <div class="badge badge-info">Activity</div>
-                            </td>
-                        </tr>
-                        @endforeach
-                        @endif
+                    @if (Auth::check())
+                    <tbody id="ActivityUserTable">
                     </tbody>
+                    @endif
                 </table>
             </div>
         </div>

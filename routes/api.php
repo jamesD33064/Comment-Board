@@ -28,3 +28,4 @@ Route::get('/Top10_ActiviteUser', [api\CommentController::class, 'Top10_Activite
 Route::get('/getUserComment/{username}', [api\CommentController::class, 'getUserComment']);
 
 Route::apiResource('managerUser', api\ManagerUserController::class);
+Route::apiResource('manager', api\ManagerController::class);

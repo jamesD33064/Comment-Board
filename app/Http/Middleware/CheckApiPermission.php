@@ -4,9 +4,8 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
 use App\Models\PermissionRole;
-use Nette\Utils\Json;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Response;
 
 class CheckApiPermission
@@ -22,7 +21,7 @@ class CheckApiPermission
     {
         $apiPath = $request->getRequestUri();
         $method = $request->method();
-        $permission = Session::get('PermissionLV');
+        $permission = Auth::user()->permission;
         $permissionFlag = false;
 
 
