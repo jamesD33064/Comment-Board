@@ -1,11 +1,14 @@
-# .gitlab-ci.yml
-
-# 定義工作階段（job）的執行環境
-image: php:8.1
-
-# 設定執行的階段
 stages:
   - test
+
+variables:
+  # 定義 Laravel 專案中的 .env 檔案設定（替換為您的實際設定）
+  DB_CONNECTION: mongodb
+  DB_HOST: database
+  DB_PORT: 27017
+  DB_DATABASE: laravel
+  DB_USERNAME: root
+  DB_PASSWORD: root
 
 # 定義測試工作階段
 test:
