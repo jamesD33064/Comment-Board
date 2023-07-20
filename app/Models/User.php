@@ -12,14 +12,21 @@ class User extends Model
 {
     protected $connection = 'mongodb';
     protected $collection = 'user';
-    protected $fillable = ['_id', 'Username', 'Password'];
+    protected $fillable = ['_id', 'username', 'password', 'name', 'email', 'status'];
 
     public function createUser(Request $request)
     {
-        $this->fill([
-            'Username' => $request->username,
-            'Password' => Hash::make($request->password)
-        ]);
+        // $this->fill([
+        //     'username' => $request->username,
+        //     'password' => Hash::make($request->password)
+        // ]);
+            $this->fill([
+                'username' => $request->username,
+                'password' => Hash::make($request->password),
+                'name' => $request->username,
+                'email' => '@',
+                'status' => '1',
+            ]);
     }
 
     //嘗試登入

@@ -38,8 +38,18 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'Manager',
+            'provider' => 'managers',
         ],
+
+        'api' => [
+            'driver' => 'jwt', // 使用 JWT 驅動程式
+            'provider' => 'users', // 使用內建的 users 資料提供者
+        ],
+    
+        // 'manager' => [
+        //     'driver' => 'session', // 使用內建的 session 驅動程式
+        //     'provider' => 'managers', // 使用自定義的 managers 資料提供者
+        // ],
     ],
 
     /*
@@ -60,15 +70,15 @@ return [
     */
 
     'providers' => [
-        'Manager' => [
+        'managers' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Manager::class,
+            'model' => App\Models\Manager::class, // Manager Model 資料提供者
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'users' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\User::class, // User Model 資料提供者
+        ],
     ],
 
     /*

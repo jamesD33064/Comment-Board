@@ -13,15 +13,16 @@ class UserController extends Controller
 {
     public function store(Request $request)
     {
-        if (!app(User::class)->validate($request->username, $request->password)) {
-            $user = new User;
-            $user->createUser($request);
-            $user->save();
+        $user = new User;
+        $user->createUser($request);
+        $user->save();
+
+        // if (!app(User::class)->validate($request->username, $request->password)) {
         
-            Log::createLog($request->username, 'Register New User', 'Success');
-        } else {
-            Log::createLog($request->username, 'Register New User', 'Fail');
-        }
+        //     Log::createLog($request->username, 'Register New User', 'Success');
+        // } else {
+        //     Log::createLog($request->username, 'Register New User', 'Fail');
+        // }
         return redirect(route('home'));
     }
 

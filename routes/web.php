@@ -20,7 +20,23 @@ use App\Http\Controllers\ManagerAuthController;
 
 Route::get('/', [CommentTableController::class, 'index'])->name('home');
 Route::get('/auth', [AuthController::class, 'showLoginForm'])->name('login');
-Route::post('/auth', [AuthController::class, 'login']);
+// Route::post('/auth', [AuthController::class, 'login']);
+
+Route::group([
+
+    'middleware' => 'api',
+    'prefix' => 'auth'
+
+], function ($router) {
+
+    Route::post('/auth', [AuthController::class, 'login']);
+    Route::post('logout', 'AuthController@logout');
+    Route::post('refresh', 'AuthController@refresh');
+    Route::post('me', 'AuthController@me');
+
+});
+
+
 
 Route::group(['middleware' => 'auth_user'], function () {
     Route::get('/profile', function () {
