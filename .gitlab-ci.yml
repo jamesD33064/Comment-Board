@@ -3,6 +3,30 @@ image: docker-hub.program.com.tw/bikonnect-pluspay/php8.1-mongodb:dev
 stages:
   - test
 
+variables:
+  SSH_PRIVATE_KEY: |
+    -----BEGIN OPENSSH PRIVATE KEY-----
+    b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW
+    QyNTUxOQAAACBd8rqlW+S/xIurToutvR5klVpAlMIewq1wqvOU4xXb3wAAAKAtdZ43LXWe
+    NwAAAAtzc2gtZWQyNTUxOQAAACBd8rqlW+S/xIurToutvR5klVpAlMIewq1wqvOU4xXb3w
+    AAAEBbDaGZFhy6K5dTpGfm0duhmUB5EGVIAKdDZdhuySifEV3yuqVb5L/Ei6tOi629HmSV
+    WkCUwh7CrXCq85TjFdvfAAAAGmphbWVzLmh1YW5nQHByb2dyYW0uY29tLnR3AQID
+    -----END OPENSSH PRIVATE KEY-----
+
+before_script:
+  # 安裝 openssh 客戶端，用於設置 SSH 代理
+  - apk add --no-cache openssh-client
+
+  # 創建一個用於存儲私鑰的文件
+  - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+
+  # 設置私鑰的權限
+  - chmod 600 ~/.ssh/id_rsa
+
+  # 添加私鑰到 SSH 代理
+  - eval $(ssh-agent -s)
+  - ssh-add ~/.ssh/id_rsa
+
 cs_test:
   stage: test
   tags:
