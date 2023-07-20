@@ -1,3 +1,5 @@
+image: docker-hub.program.com.tw/bikonnect-pluspay/php8.1-mongodb
+
 stages:
   - test
 
