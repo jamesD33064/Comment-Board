@@ -3,21 +3,9 @@ image: docker-hub.program.com.tw/bikonnect-pluspay/php8.1-mongodb
 stages:
   - test
 
-variables:
-  # 定義 Laravel 專案中的 .env 檔案設定（替換為您的實際設定）
-  DB_CONNECTION: mongodb
-  DB_HOST: database
-  DB_PORT: 27017
-  DB_DATABASE: laravel
-  DB_USERNAME: root
-  DB_PASSWORD: root
-
-test:
+cs_fixer:
   stage: test
-  image: composer:latest
+  tags:
+    - docker
   script:
-    - cp .env.example .env  # 將 .env.example 複製為 .env
-    - composer install --no-interaction --prefer-dist  # 安裝 Composer 依賴
-    - php artisan key:generate  # 生成 Laravel 應用程序密鑰
-    - php artisan migrate --seed  # 遷移數據庫並填充種子數據
-    - php artisan test  # 執行 Laravel 測試
+    - php-cs-fixer fix --dry-run
