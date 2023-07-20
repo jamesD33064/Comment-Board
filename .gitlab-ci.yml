@@ -8,4 +8,5 @@ cs_fixer:
   tags:
     - docker
   script:
-    - phpcbf --standard=PSR12 --exclude=Generic.Files.LineLength,PSR12.Classes.OpeningBraceSpace --extensions=php app
+    - pwd
+    - phpcbf --standard=PSR12 /
