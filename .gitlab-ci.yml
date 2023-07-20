@@ -8,4 +8,4 @@ cs_fixer:
   tags:
     - docker
   script:
-    - php-cs-fixer fix --dry-run
+    - php phpcs.phar --standard=PSR12 --exclude=Generic.Files.LineLength,PSR12.Classes.OpeningBraceSpace --extensions=php app
