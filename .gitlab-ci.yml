@@ -11,14 +11,8 @@ stages:
 test:
   stage: test
   script:
-    - apt-get update -qy
-    - apt-get install -y zip unzip
-    - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-    - cp .env.example .env
-    - composer install --no-ansi --no-interaction --no-progress --optimize-autoloader
-    - php artisan key:generate
-    - php artisan config:cache
-    - php artisan migrate --force
-    - vendor/bin/phpunit
-
-# 您可以根據需求添加其他工作階段，例如部署階段等。
+    - cp .env.example .env  # 將 .env.example 複製為 .env
+    - composer install --no-interaction --prefer-dist  # 安裝 Composer 依賴
+    - php artisan key:generate  # 生成 Laravel 應用程序密鑰
+    - php artisan migrate --seed  # 遷移數據庫並填充種子數據
+    - php artisan test  # 執行 Laravel 測試
