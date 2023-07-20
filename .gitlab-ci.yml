@@ -5,12 +5,8 @@ stages:
 
 before_script:
   - apk add --no-cache openssh-client
-
-  # 創建一個用於存儲私鑰的文件
   - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
   - chmod 600 ~/.ssh/id_rsa
-
-  # 添加私鑰到 SSH 代理
   - eval $(ssh-agent -s)
   - ssh-add ~/.ssh/id_rsa
 
