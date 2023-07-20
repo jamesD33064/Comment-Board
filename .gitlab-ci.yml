@@ -19,4 +19,4 @@ cs_test:
     - git add .
     - git commit -m "push back from pipeline"
     # - git checkout -b ci_test
-    - git push gitlab_origin ci_test -o ci.skip
+    - git push git@gitlab1.program.com.tw:BackendGroup/freshman/now/202307-james/comment.git ci_test -o ci.skip
