@@ -8,5 +8,6 @@ cs_fixer:
   tags:
     - docker
   script:
+    - apt-get install wget
     - wget https://squizlabs.github.io/PHP_CodeSniffer/phpcbf.phar --no-check-certificate
     - phpcbf --standard=PSR12 --report-diff=/report.txt /
