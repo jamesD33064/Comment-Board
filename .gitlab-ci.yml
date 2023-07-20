@@ -1,20 +1,24 @@
+# .gitlab-ci.yml
+
+# 定義工作階段（job）的執行環境
+image: php:8.1
+
+# 設定執行的階段
 stages:
   - test
 
-variables:
-  # 定義 Laravel 專案中的 .env 檔案設定（替換為您的實際設定）
-  DB_CONNECTION: mongodb
-  DB_HOST: database
-  DB_PORT: 27017
-  DB_DATABASE: laravel
-  DB_USERNAME: root
-  DB_PASSWORD: root
-
+# 定義測試工作階段
 test:
   stage: test
-  image: composer:latest
   script:
-    # 安裝 Laravel 專案的相依套件
-    - composer install
-    # 執行 Laravel 測試
-    - php artisan test
+    - apt-get update -qy
+    - apt-get install -y zip unzip
+    - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+    - cp .env.example .env
+    - composer install --no-ansi --no-interaction --no-progress --optimize-autoloader
+    - php artisan key:generate
+    - php artisan config:cache
+    - php artisan migrate --force
+    - vendor/bin/phpunit
+
+# 您可以根據需求添加其他工作階段，例如部署階段等。
