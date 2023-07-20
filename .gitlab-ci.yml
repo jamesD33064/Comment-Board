@@ -15,6 +15,6 @@ test:
   image: composer:latest
   script:
     # 安裝 Laravel 專案的相依套件
-    - composer update
+    - composer install
     # 執行 Laravel 測試
     - php artisan test
