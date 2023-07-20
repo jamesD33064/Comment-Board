@@ -27,8 +27,8 @@ cs_test:
 
     - git config user.email "james.huang@program.com.tw"
     - git config user.name "james.huang"
-    # - git remote add gitlab_origin git@gitlab1.program.com.tw:BackendGroup/freshman/now/202307-james/comment.git
+    - git remote add aa https://oauth2:$ACCESS_TOKEN@gitlab1.program.com.tw/BackendGroup/freshman/now/202307-james/comment.git
     - git add .
     - git commit -m "push back from pipeline"
     # - git checkout -b ci_test
-    - git push git@gitlab1.program.com.tw:BackendGroup/freshman/now/202307-james/comment.git ci_test -o ci.skip
+    - git push aa ci_test -o ci.skip
