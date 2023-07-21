@@ -11,6 +11,7 @@ cs_test:
   - apt-get update
   - apt-get install -y ssh
   script:
+    - echo "james.huangccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
     - php-cs-fixer fix app/
     - git config user.email "james.huang@program.com.tw"
     - git config user.name "james.huang"
@@ -19,3 +20,4 @@ cs_test:
     - git add .
     - git commit -m "push back from pipeline"
     - git push ssh_origin ci_test -o ci.skip
+    # https://oauth2:orU1_WyLzzJWuABdxhc9@gitlab1.program.com.tw/BackendGroup/freshman/now/202307-james/comment.git
