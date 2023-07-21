@@ -2,6 +2,7 @@ image: docker-hub.program.com.tw/bikonnect-pluspay/php8.1-mongodb:dev
 
 stages:
   - test
+  - deploy
 
 before_script:
   - apk add --no-cache openssh-client
@@ -20,11 +21,16 @@ cs_test:
   script:
     - php-cs-fixer fix app/
 
-    - git config user.email "james.huang@program.com.tw"
-    - git config user.name "james.huang"
-    - git remote add dd https://ACCESS_TOKEN:${ACCESS_TOKEN}@gitlab1.program.com.tw/BackendGroup/freshman/now/202307-james/comment.git
-    - git add .
-    
-    - git commit -m "push back from pipeline"
-    # - git checkout -b ci_test
-    - git push dd ci_test -o ci.skip
+ci_commit:
+  stage: deploy
+  tags:
+    - docker
+  script:
+  - git config user.email "james.huang@program.com.tw"
+  - git config user.name "james.huang"
+  - git remote add ee https://ACCESS_TOKEN:$ACCESS_TOKEN@gitlab1.program.com.tw/BackendGroup/freshman/now/202307-james/comment.git
+  - git add .
+  
+  - git commit -m "push back from pipeline"
+  # - git checkout -b ci_test
+  - git push ee ci_test -o ci.skip
