@@ -51,13 +51,13 @@ class User extends Model
     }
 
     // 取得使用者ID
-    public function getUserId() : String
+    public function getUserId(): String
     {
         return session('userId');
     }
-    
+
     // 取得使用者名稱
-    public function getUsername() : String
+    public function getUsername(): String
     {
         return session('username');
     }
@@ -73,8 +73,8 @@ class User extends Model
 
     // 確認登入狀態
     public function isLogin()
-    {   
-        if(Session::has('userId')){
+    {
+        if (Session::has('userId')) {
             return 'true';
         } else {
             return 'false';
@@ -86,8 +86,8 @@ class User extends Model
     {
         $user = self::where('Username', $username)->first();
         return (
-                $user &&
-                Hash::check($password, $user->Password)
-                );
+            $user &&
+            Hash::check($password, $user->Password)
+        );
     }
 }

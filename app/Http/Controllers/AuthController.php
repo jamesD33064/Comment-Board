@@ -17,7 +17,7 @@ class AuthController extends Controller
     // 登入
     public function login(Request $request)
     {
-        $user = new User;
+        $user = new User();
         if ($user->attemptLogin($request)) {
             // 確認登入
             Log::createLog($request->username, 'Login', 'Success');

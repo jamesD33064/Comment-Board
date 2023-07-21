@@ -28,9 +28,9 @@ class PermissionRoleController extends Controller
      */
     public function store(Request $request)
     {
-        $PermissionRole = new PermissionRole;
-        
-        if($PermissionRole->createRole($request->RoleName, $request->Permission)){
+        $PermissionRole = new PermissionRole();
+
+        if ($PermissionRole->createRole($request->RoleName, $request->Permission)) {
             $PermissionRole->save();
             Log::createLog($request->RoleName, 'New Permission Role', 'Success');
             return true;
@@ -64,7 +64,7 @@ class PermissionRoleController extends Controller
         $role = PermissionRole::find($id);
         $role->Permission = $request->Permission;
         $role->save();
-        
+
         return "更新成功";
     }
 
@@ -77,7 +77,7 @@ class PermissionRoleController extends Controller
     public function destroy($id)
     {
         $role = PermissionRole::find($id);
-        if(!Manager_User::where('PermissionLV',$role->RoleName)->exists()){
+        if (!Manager_User::where('PermissionLV', $role->RoleName)->exists()) {
             $role->delete();
             return '刪除成功';
         }

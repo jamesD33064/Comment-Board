@@ -49,7 +49,8 @@ class ManagerAuthController extends Controller
     }
 
     // 登入
-    public function login(Request $request){
+    public function login(Request $request)
+    {
         $request->validate([
             'username' => 'required',
             'password' => 'required',
@@ -72,7 +73,7 @@ class ManagerAuthController extends Controller
     // 登出
     public function logout(Request $request): RedirectResponse
     {
-        Auth::logout();     
+        Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect('/manage');

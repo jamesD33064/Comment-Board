@@ -12,7 +12,7 @@ class LogController extends Controller
     public function export()
     {
         // 用laravel套件
-        
+
         // 取得data
         $data = Log::all();
 
@@ -42,5 +42,4 @@ class LogController extends Controller
 
         return Response::stream($callback, 200, $headers);
     }
-
 }

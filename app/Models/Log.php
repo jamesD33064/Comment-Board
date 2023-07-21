@@ -11,7 +11,7 @@ class Log extends Model
     protected $connection = 'mongodb';
     protected $collection = 'log';
     protected $fillable = ['user_id', 'action', 'details'];
-    
+
     public static function createLog($userId, $action, $details)
     {
         self::create([

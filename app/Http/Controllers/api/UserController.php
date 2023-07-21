@@ -14,10 +14,10 @@ class UserController extends Controller
     public function store(Request $request)
     {
         if (!app(User::class)->validate($request->username, $request->password)) {
-            $user = new User;
+            $user = new User();
             $user->createUser($request);
             $user->save();
-        
+
             Log::createLog($request->username, 'Register New User', 'Success');
         } else {
             Log::createLog($request->username, 'Register New User', 'Fail');
@@ -36,17 +36,17 @@ class UserController extends Controller
     {
         $oldPW = $request->input('oldPW');
         $newPW = $request->input('newPW');
-        
+
         $user = User::where('Username', $username)->first();
-        
+
         if (app(User::class)->validate($username, $oldPW)) {
             $user->Password = Hash::make($newPW);
             $user->save();
-        
+
             Log::createLog($username, 'Update Password', 'Success');
             return redirect(route('home'));
         }
-        
+
         Log::createLog($username, 'Update Password', 'Fail');
         return '原密碼錯誤';
     }
@@ -57,12 +57,12 @@ class UserController extends Controller
 
         if ($user) {
             $user->delete();
-        
+
             Log::createLog($username, 'Delete Account', 'Success');
             return response()->json(['message' => 'Resource deleted successfully']);
         } else {
             Log::createLog($username, 'Delete Account', 'Fail');
             return response()->json(['message' => 'Resource deleted Fail']);
-        }        
+        }
     }
 }

@@ -38,13 +38,13 @@ class CheckWebPermission
 
                 switch ($apiPath) {
                     case "/manage/log":
-                            $permissionFlag = $permission->checkRecord->log->R;//Read log
+                        $permissionFlag = $permission->checkRecord->log->R;//Read log
                         break;
                     case "/manage/account/superManager":
-                            $permissionFlag = $permission->accountManage->admin->R;//Read superManager
+                        $permissionFlag = $permission->accountManage->admin->R;//Read superManager
                         break;
                     case "/manage/account/RoleManage":
-                            $permissionFlag = $permission->accountManage->role->R;//Read RoleManage
+                        $permissionFlag = $permission->accountManage->role->R;//Read RoleManage
                         break;
                     default:
                         $permissionFlag = true;

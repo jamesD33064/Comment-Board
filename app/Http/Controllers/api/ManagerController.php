@@ -29,8 +29,8 @@ class ManagerController extends Controller
     public function store(Request $request)
     {
         $data = $request->only(['username', 'password', 'name', 'email', 'status', 'permission']);
-        $Manager = new Manager;
-        if(Manager::where('username', $data['username'])->exists()){
+        $Manager = new Manager();
+        if (Manager::where('username', $data['username'])->exists()) {
             return 'username exists';
         }
         $Manager->createUser($data);
@@ -81,7 +81,7 @@ class ManagerController extends Controller
         if ($request->Permission == "0") {
             return false;
         }
-        
+
         $user = Manager::where("_id", $request->_id)->first();
         $user->permission = $request->Permission;
         $user->save();

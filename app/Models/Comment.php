@@ -21,7 +21,8 @@ class Comment extends Model
         ]);
     }
 
-    public function Top10_ActiviteUser(){
+    public function Top10_ActiviteUser()
+    {
         // top10ActiviteUser
         $pipeline = [
             [
@@ -37,7 +38,8 @@ class Comment extends Model
         return $this->raw()->aggregate($pipeline);
     }
 
-    public function getUserComment($UserName){
-        return $this->where('UserName',$UserName)->get();
+    public function getUserComment($UserName)
+    {
+        return $this->where('UserName', $UserName)->get();
     }
 }
