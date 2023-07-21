@@ -2,6 +2,7 @@ image: docker-hub.program.com.tw/bikonnect-pluspay/php8.1-mongodb:dev
 
 stages:
   - test
+  - deploy
 
 cs_test:
   stage: test
@@ -12,13 +13,15 @@ cs_test:
   - apt-get install -y ssh
   script:
     - php-cs-fixer fix app/
+
+ci_commitBack:
+  stage: deploy
+  script:
     - git config user.email "james.huang@program.com.tw"
     - git config user.name "james.huang"
     - git remote remove ssh_origin || true
     - git remote add ssh_origin https://oauth2:$ACCESS_TOKEN@gitlab1.program.com.tw/BackendGroup/freshman/now/202307-james/comment.git
     - git pull ssh_origin ci_test
-    # Commit the changes
     - git add .
     - git commit -m "Fix PHP code style"
-    # Push changes back to the ci_test branch with [ci skip] to avoid triggering CI for the push
     - git push ssh_origin HEAD:ci_test -o ci.skip
