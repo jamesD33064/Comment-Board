@@ -1,6 +1,7 @@
 image: docker-hub.program.com.tw/bikonnect-pluspay/php8.1-mongodb:dev
 
 stages:
+  - echo
   - test
   - deploy
 
@@ -10,6 +11,10 @@ stages:
 #   - chmod 600 ~/.ssh/id_rsa
 #   - eval $(ssh-agent -s)
 #   - ssh-add ~/.ssh/id_rsa
+echo_token:
+  stage: echo
+  script:
+  - echo $ACCESS_TOKEN
 
 cs_test:
   stage: test
@@ -32,5 +37,4 @@ ci_commit:
   - git add .
   
   - git commit -m "push back from pipeline"
-  # - git checkout -b ci_test
   - git push ee ci_test -o ci.skip
