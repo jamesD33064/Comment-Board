@@ -14,7 +14,8 @@ cs_test:
     - php-cs-fixer fix app/
     - git config user.email "james.huang@program.com.tw"
     - git config user.name "james.huang"
-    -  git remote add hh git@gitlab1.program.com.tw:BackendGroup/freshman/now/202307-james/comment.git
+    - git remote remove ssh_origin || true
+    - git remote add ssh_origin git@gitlab1.program.com.tw:BackendGroup/freshman/now/202307-james/comment.git
     - git add .
     - git commit -m "push back from pipeline"
-    - git push hh ci_test -o ci.skip
+    - git push ssh_origin ci_test -o ci.skip
