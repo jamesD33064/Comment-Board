@@ -14,7 +14,7 @@ stages:
 echo_token:
   stage: echo
   script:
-  - echo $ACCESS_TOKEN
+  - echo ${ACCESS_TOKEN}
 
 cs_test:
   stage: test
