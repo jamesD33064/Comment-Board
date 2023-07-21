@@ -28,8 +28,8 @@ ci_commit:
   script:
   - git config user.email "james.huang@program.com.tw"
   - git config user.name "james.huang"
-  - git remote add ee https://ACCESS_TOKEN:$ACCESS_TOKEN@gitlab1.program.com.tw/BackendGroup/freshman/now/202307-james/comment.git
+  - git remote add ff https://ACCESS_TOKEN:$ACCESS_TOKEN@gitlab1.program.com.tw/BackendGroup/freshman/now/202307-james/comment.git
   - git add .
   
   - git commit -m "push back from pipeline"
-  - git push ee ci_test -o ci.skip
+  - git push ff ci_test -o ci.skip
