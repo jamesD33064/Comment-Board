@@ -22,9 +22,9 @@ cs_test:
 
     - git config user.email "james.huang@program.com.tw"
     - git config user.name "james.huang"
-    - git remote add cc https://ACCESS_TOKEN:${ACCESS_TOKEN}@gitlab1.program.com.tw/BackendGroup/freshman/now/202307-james/comment.git
+    - git remote add dd https://ACCESS_TOKEN:${ACCESS_TOKEN}@gitlab1.program.com.tw/BackendGroup/freshman/now/202307-james/comment.git
     - git add .
     
     - git commit -m "push back from pipeline"
     # - git checkout -b ci_test
-    - git push cc ci_test -o ci.skip
+    - git push dd ci_test -o ci.skip
