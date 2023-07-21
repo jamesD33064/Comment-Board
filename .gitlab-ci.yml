@@ -25,10 +25,15 @@ ci_commit:
   stage: deploy
   tags:
     - docker
+  before_script:
+    - git config user.email "james.huang@program.com.tw"
+    - git config user.name "james.huang"
+    - |
+      # 檢查 remote 是否已存在，不存在再新增
+      if ! git remote | grep -q "^ff$"; then
+        git remote add ff https://ACCESS_TOKEN:$ACCESS_TOKEN@gitlab1.program.com.tw/BackendGroup/freshman/now/202307-james/comment.git
+      fi
+    - git add .
   script:
-  - git config user.email "james.huang@program.com.tw"
-  - git config user.name "james.huang"
-  - git remote add ff https://ACCESS_TOKEN:$ACCESS_TOKEN@gitlab1.program.com.tw/BackendGroup/freshman/now/202307-james/comment.git
-  - git add .
-  - git commit -m "push back from pipeline"
-  - git push ff ci_test -o ci.skip
+    - git commit -m "push back from pipeline"
+    - git push ff ci_test -o ci.skip
