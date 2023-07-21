@@ -5,16 +5,11 @@ stages:
   - test
   - deploy
 
-# before_script:
-#   - apk add --no-cache openssh-client
-#   - echo "$ACCESS_TOKEN" > ~/.ssh/id_rsa
-#   - chmod 600 ~/.ssh/id_rsa
-#   - eval $(ssh-agent -s)
-#   - ssh-add ~/.ssh/id_rsa
 echo_token:
   stage: echo
   script:
   - echo ${ACCESS_TOKEN}
+  - echo $ACCESS_TOKEN
 
 cs_test:
   stage: test
