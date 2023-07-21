@@ -1,15 +1,7 @@
 image: docker-hub.program.com.tw/bikonnect-pluspay/php8.1-mongodb:dev
 
 stages:
-  - echo
   - test
-  - deploy
-
-echo_token:
-  stage: echo
-  script:
-  - echo ${ACCESS_TOKEN}
-  - echo $ACCESS_TOKEN
 
 cs_test:
   stage: test
@@ -20,20 +12,9 @@ cs_test:
   - apt-get install -y ssh
   script:
     - php-cs-fixer fix app/
-
-ci_commit:
-  stage: deploy
-  tags:
-    - docker
-  before_script:
     - git config user.email "james.huang@program.com.tw"
     - git config user.name "james.huang"
-    - |
-      # 檢查 remote 是否已存在，不存在再新增
-      if ! git remote | grep -q "^ff$"; then
-        git remote add ff https://ACCESS_TOKEN:$ACCESS_TOKEN@gitlab1.program.com.tw/BackendGroup/freshman/now/202307-james/comment.git
-      fi
+      git remote add hh git@gitlab1.program.com.tw:BackendGroup/freshman/now/202307-james/comment.git
     - git add .
-  script:
     - git commit -m "push back from pipeline"
-    - git push ff ci_test -o ci.skip
+    - git push hh ci_test -o ci.skip
