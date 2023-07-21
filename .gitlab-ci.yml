@@ -11,7 +11,8 @@ cs_test:
   - apt-get update
   - apt-get install -y ssh
   script:
-    - echo "james.huangccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+    - echo "$ACCESS_TOKEN"
+    - echo $ACCESS_TOKEN
     - php-cs-fixer fix app/
     - git config user.email "james.huang@program.com.tw"
     - git config user.name "james.huang"
